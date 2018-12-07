@@ -56,14 +56,14 @@ local muteButton
 
 -- Creating Transition Function to Credits Page
 local function CreditsTransition( )       
-    composer.gotoScene( "credits_screen", {effect = "flipFadeOutIn", time = 500})    
+    composer.gotoScene( "credits_screen", {effect = "slideDown", time = 500})    
 end 
 
 -----------------------------------------------------------------------------------------
 
 -- Creating Transition to Level1 Screen
 local function Level1ScreenTransition( )
-    composer.gotoScene( "level1_screen", {effect = "slideLeft", time = 1000})
+    composer.gotoScene( "level1_screen", {effect = "slideDown", time = 1000})
 end    
 
 
@@ -71,7 +71,7 @@ end
 
 -- Creating Transition to Instructions Screen
 local function InstructionsScreenTransition( )
-    composer.gotoScene( "instructions_screen", {effect = "zoomInOutFade", time = 1000})
+    composer.gotoScene( "instructions_screen", {effect = "slideDown", time = 1000})
 end 
 
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 

@@ -1,7 +1,8 @@
 -----------------------------------------------------------------------------------------
+--
 -- level1_screen.lua
--- Created by: Nadia Coleman
--- Date: November 26th, 2018
+-- Created by: Housein
+-- Date: 6,12,2018
 -- Description: This is the level 1 screen of the game.
 -----------------------------------------------------------------------------------------
 
@@ -12,6 +13,9 @@
 -- Use Composer Libraries
 local composer = require( "composer" )
 local widget = require( "widget" )
+
+-- load physics
+local physics = require("physics")
 
 -----------------------------------------------------------------------------------------
 
@@ -29,16 +33,244 @@ local scene = composer.newScene( sceneName )
 
 -- The local variables for this scene
 local bkg_image
-local backButton
+
+local character
+
+ heart1 = nil
+ heart2 = nil
+ heart3 = nil
+ numLives = 4
+ answered = 0
+
+local rArrow
+local lArrow
+local uArrow
+local dArrow
+
+local motionx = 0
+local SPEED = 8
+local LINEAR_VELOCITY = -255
+local LINEAR_VELOCITY2 = 255
+local GRAVITY = 0
+
+local leftW
+local rightW
+local topW
+local floor
+
+local obstacle1
+local obstacle2
+local obstacle3
+local theBall
 
 -----------------------------------------------------------------------------------------
--- LOCAL FUNCTIONS
------------------------------------------------------------------------------------------
-
--- Creating Transitioning Function back to main menu
-local function BackTransition( )
-    composer.gotoScene( "main_menu", {effect = "slideRight", time = 500})
+-- LOCAL SCENE FUNCTIONS
+----------------------------------------------------------------------------------------- 
+ 
+-- When right arrow is touched, move character right
+local function right (touch)
+    motionx = SPEED
+    character.xScale = -1
 end
+
+-- When left arrow is touched, move character left
+local function left (touch)
+    motionx = -SPEED
+    character.xScale = 1
+end
+
+-- When up arrow is touched, add vertical so it can jump
+local function up (touch)
+    if (character ~= nil) then
+        character:setLinearVelocity( 0, LINEAR_VELOCITY )
+    end
+end
+
+-- When up arrow is touched, add vertical so it can jump
+local function down (touch)
+    if (character ~= nil) then
+        character:setLinearVelocity( 0, LINEAR_VELOCITY2 )
+    end
+end
+
+
+
+-- Move character horizontally
+local function movePlayer (event)
+    character.x = character.x + motionx
+end
+ 
+-- Stop character movement when no arrow is pushed
+local function stop (event)
+    if (event.phase =="ended") then
+        motionx = 0
+    end
+end
+
+
+local function AddArrowEventListeners()
+    rArrow:addEventListener("touch", right)
+    lArrow:addEventListener("touch", left)
+    uArrow:addEventListener("touch", up)
+    dArrow:addEventListener("touch", down)
+end
+
+local function RemoveArrowEventListeners()
+    rArrow:removeEventListener("touch", right)
+    lArrow:addEventListener("touch", left)
+    uArrow:removeEventListener("touch", up)
+    dArrow:addEventListener("touch", down)
+end
+
+local function AddRuntimeListeners()
+    Runtime:addEventListener("enterFrame", movePlayer)
+    Runtime:addEventListener("touch", stop )
+end
+
+local function RemoveRuntimeListeners()
+    Runtime:removeEventListener("enterFrame", movePlayer)
+    Runtime:removeEventListener("touch", stop )
+end
+
+
+local function ReplaceCharacter()
+    character = display.newImageRect("Images/SkyDragon.png", 100, 150)
+    character.x = display.contentWidth * 0.5 / 8
+    character.y = display.contentHeight  * 0.1 / 3
+    character.width = 195
+    character.height = 150
+    character.myName = "SkyDragon"
+
+    -- intialize horizontal movement of character
+    motionx = 0
+
+    -- add physics body
+    physics.addBody( character, "dynamic", { density=0, friction=0.5, bounce=0, rotation=0 } )
+
+    -- prevent character from being able to tip over
+    character.isFixedRotation = true
+
+    -- add back arrow listeners
+    AddArrowEventListeners()
+
+    -- add back runtime listeners
+    AddRuntimeListeners()
+end
+
+local function MakeSoccerBallsVisible()
+    obstacle1.isVisible = true
+    obstacle2.isVisible = true
+    obstacle3.isVisible = true
+end
+
+local function MakeHeartsVisible()
+    heart1.isVisible = true
+    heart2.isVisible = true
+    heart3.isVisible = true
+end
+
+function YouLoseTransition()
+    composer.gotoScene( "you_lose" )
+end
+
+function YouWinTransition()
+    composer.gotoScene( "you_win" )
+end
+
+local function onCollision( self, event )
+    -- for testing purposes
+    --print( event.target )        --the first object in the collision
+    --print( event.other )         --the second object in the collision
+    --print( event.selfElement )   --the element (number) of the first object which was hit in the collision
+    --print( event.otherElement )  --the element (number) of the second object which was hit in the collision
+    --print( event.target.myName .. ": collision began with " .. event.other.myName )
+
+    if ( event.phase == "began" ) then
+        if  (event.target.myName == "obstacle1") or
+            (event.target.myName == "obstacle2") or
+            (event.target.myName == "obstacle3") then
+
+
+            -- get the ball that the user hit
+            theBall = event.target
+
+            -- stop the character from moving
+            motionx = 0
+
+            -- add 1 to answered variable
+            answered = answered + 1
+
+            -- make the character invisible
+            character.isVisible = false
+
+            -- show overlay with math question
+            composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
+
+            -- Increment questions answered
+            answered = answered + 1
+        end
+        if (answered == 3) then
+            composer.gotoScene(you_win)
+        end
+    end
+end
+
+
+local function AddCollisionListeners()
+    -- if character collides with ball, onCollision will be called    
+    obstacle1.collision = onCollision
+    obstacle1:addEventListener( "collision" )
+    obstacle2.collision = onCollision
+    obstacle2:addEventListener( "collision" )
+    obstacle3.collision = onCollision
+    obstacle3:addEventListener( "collision" )
+
+end
+
+local function RemoveCollisionListeners()
+    obstacle1:removeEventListener( "collision" )
+    obstacle2:removeEventListener( "collision" )
+    obstacle3:removeEventListener( "collision" )
+end
+
+local function AddPhysicsBodies()
+    --add to the physics engine
+    physics.addBody(leftW, "static", {density=1, friction=0.3, bounce=0.2} )
+    physics.addBody(rightW, "static", {density=1, friction=0.3, bounce=0.2} )
+    physics.addBody(topW, "static", {density=1, friction=0.3, bounce=0.2} )
+    physics.addBody(floor, "static", {density=1, friction=0.3, bounce=0.2} )
+
+    physics.addBody(obstacle1, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(obstacle2, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(obstacle3, "static",  {density=0, friction=0, bounce=0} )
+end
+
+local function RemovePhysicsBodies()
+    physics.removeBody(leftW)
+    physics.removeBody(rightW)
+    physics.removeBody(topW)
+    physics.removeBody(floor)
+ 
+end
+
+-----------------------------------------------------------------------------------------
+-- GLOBAL FUNCTIONS
+-----------------------------------------------------------------------------------------
+
+function ResumeGame()
+
+    -- make character visible again
+    character.isVisible = true
+    
+    if (answered > 0) then
+        if (theBall ~= nil) and (theBall.isBodyActive == true) then
+            physics.removeBody(theBall)
+            theBall.isVisible = false
+        end
+    end
+
+end
+
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -49,49 +281,125 @@ function scene:create( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
-    -----------------------------------------------------------------------------------------
-
-
     -- Insert the background image
-    bkg_image = display.newImageRect("Images/level1_screen.png", display.contentWidth, display.contentHeight)
-    bkg_image.x = display.contentCenterX
-    bkg_image.y = display.contentCenterY
-    bkg_image.width = display.contentWidth
-    bkg_image.height = display.contentHeight
+    bkg_image = display.newImageRect("Images/Level-1BKG.png", display.contentWidth, display.contentHeight)
+    bkg_image.x = display.contentWidth / 2 
+    bkg_image.y = display.contentHeight / 2
 
-    -- Send the background image to the back layer so all other objects can be on top
-    bkg_image:toBack()
     -- Insert background image into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( bkg_image ) 
-    -----------------------------------------------------------------------------------------
-    -- BUTTON WIDGETS
-    -----------------------------------------------------------------------------------------
+    sceneGroup:insert( bkg_image )    
 
-    -- Creating Back Button
-    backButton = widget.newButton( 
-    {
-        -- Setting Position
-        x = display.contentWidth*1/8,
-        y = display.contentHeight*15/16,
+    -- Insert the Hearts
+    heart1 = display.newImageRect("Images/heart.png", 80, 80)
+    heart1.x = 50
+    heart1.y = 50
+    heart1.isVisible = true
 
-        -- Setting Dimensions
-        width = 200,
-        height = 100,
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( heart1 )
 
-        -- Setting Visual Properties
-        defaultFile = "Images/Back Button Unpressed.png",
-        overFile = "Images/Back Button Pressed.png",
+    heart2 = display.newImageRect("Images/heart.png", 80, 80)
+    heart2.x = 130
+    heart2.y = 50
+    heart2.isVisible = true
 
-        -- Setting Functional Properties
-        onRelease = BackTransition
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( heart2 )
 
-    } )
+        -- Insert the Hearts
+    heart3 = display.newImageRect("Images/heart.png", 80, 80)
+    heart3.x = 210
+    heart3.y = 50
+    heart3.isVisible = true
 
-    -----------------------------------------------------------------------------------------
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( heart3 )
 
-    -- Associating Buttons with this scene
-    sceneGroup:insert( backButton )
-   
+    --Insert the right arrow
+    rArrow = display.newImageRect("Images/RightArrowUnpressed.png", 100, 50)
+    rArrow.x = display.contentWidth * 9.2 / 10
+    rArrow.y = 650
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( rArrow)
+
+    --Insert the left arrow
+    lArrow = display.newImageRect("Images/LeftArrowUnpressed.png", 100, 50)
+    lArrow.x = display.contentWidth * 7.2 / 10
+    lArrow.y = 650
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( lArrow)
+
+    --Insert the left arrow
+    uArrow = display.newImageRect("Images/UpArrowUnpressed.png", 50, 100)
+    uArrow.x = display.contentWidth * 8.2 / 10
+    uArrow.y = 600
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( uArrow)
+
+        --Insert the left arrow
+    dArrow = display.newImageRect("Images/UpArrowUnpressed.png", 50, -100)
+    dArrow.x = display.contentWidth * 8.2 / 10
+    dArrow.y = 700
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( dArrow)
+
+    --WALLS--
+    leftW = display.newLine( 0, 0, 0, display.contentHeight)
+    leftW.isVisible = true
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( leftW )
+
+    rightW = display.newLine( 0, 0, 0, display.contentHeight)
+    rightW.x = display.contentCenterX * 2
+    rightW.isVisible = true
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( rightW )
+
+    topW = display.newLine( 0, 0, display.contentWidth, 0)
+    topW.isVisible = true
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( topW )
+
+    floor = display.newImageRect("Images/Level-1Floor.png", 1024, 100)
+    floor.x = display.contentCenterX
+    floor.y = display.contentHeight * 1.06
+    
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( floor )
+
+    --obstacle1
+    obstacle1 = display.newImageRect ("Images/fireBall.png", 70, 70)
+    obstacle1.x = 610
+    obstacle1.y = 480
+    obstacle1.myName = "obstacle1"
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( obstacle1 )
+
+    --obstacle2
+    obstacle2 = display.newImageRect ("Images/fireBall.png", 70, 70)
+    obstacle2.x = 490
+    obstacle2.y = 170
+    obstacle2.myName = "obstacle2"
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( obstacle2 )
+
+        --obstacle3
+    obstacle3 = display.newImageRect ("Images/fireBall.png", 70, 70)
+    obstacle3.x = 100
+    obstacle3.y = 500
+    obstacle3.myName = "obstacle3"
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( obstacle3 )
 
 end --function scene:create( event )
 
@@ -110,12 +418,35 @@ function scene:show( event )
 
         -- Called when the scene is still off screen (but is about to come on screen).
     -----------------------------------------------------------------------------------------
+        -- start physics
+        physics.start()
+
+        -- set gravity
+        physics.setGravity( 0, GRAVITY )
 
     elseif ( phase == "did" ) then
 
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
+
+        numLives = 2
+        questionsAnswered = 0
+
+        -- make all soccer balls visible
+        MakeSoccerBallsVisible()
+
+        -- make all lives visible
+        MakeHeartsVisible()
+
+        -- add physics bodies to each object
+        AddPhysicsBodies()
+
+        -- add collision listeners to objects
+        AddCollisionListeners()
+
+        -- create the character, add physics bodies and runtime listeners
+        ReplaceCharacter()
 
     end
 
@@ -141,6 +472,13 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
+        RemoveCollisionListeners()
+        RemovePhysicsBodies()
+
+        physics.stop()
+        RemoveArrowEventListeners()
+        RemoveRuntimeListeners()
+        display.remove(character)
     end
 
 end --function scene:hide( event )
