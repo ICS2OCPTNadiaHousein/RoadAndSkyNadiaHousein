@@ -178,8 +178,6 @@ function scene:create( event )
             defaultFile = "Images/muteUnpressed.png",
             overFile = "Images/mutePressed.png",
 
-            -- When the button is released, call the Level1 screen transition function
-            onRelease = audio.stop(backgroundSoundChannel)       
         } )
 
     -----------------------------------------------------------------------------------------
@@ -240,6 +238,7 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
+        audio.stop(backgroundSoundChannel)
 
 
     -----------------------------------------------------------------------------------------
