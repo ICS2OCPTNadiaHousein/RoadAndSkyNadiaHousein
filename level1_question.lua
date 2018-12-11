@@ -71,7 +71,7 @@ end
 --making transition to next scene
 local function BackToLevel1() 
     composer.hideOverlay("crossFade", 400 )
-  
+
     ResumeGame()
 end 
 
@@ -81,7 +81,6 @@ local function TouchListenerAnswer(touch)
     userAnswer = answerText.text
     
     if (touch.phase == "ended") then
-
         BackToLevel1( )
     
     end 
@@ -163,7 +162,7 @@ local function TouchListenerWrongAnswer3(touch)
                 heart2.isVisible = false
                 heart3.isVisible = true
                 timer.performWithDelay(200, ReplaceCharacter) 
-            elseif (numLives == -3) then              
+            elseif (numLives == -4) then              
                 -- update hearts
                 heart1.isVisible = false
                 heart2.isVisible = false

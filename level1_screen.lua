@@ -59,7 +59,10 @@ local motionx = 0
 local SPEED = 8
 local LINEAR_VELOCITY = -255
 local LINEAR_VELOCITY2 = 255
-local GRAVITY = 0
+local GRAVITY = 5
+local motionx1 = 8
+local motionx2 = 7
+local motionx3 = 6
 
 local leftW
 local rightW
@@ -101,13 +104,25 @@ local function down (touch)
     end
 end
 
-
-
 -- Move character horizontally
 local function movePlayer (event)
     character.x = character.x + motionx
 end
- 
+
+-- Moves the obsticles
+function moveObsticles()
+    obstacle1.x = obstacle1.x - motionx1
+    obstacle2.x = obstacle2.x - motionx2
+    obstacle3.x = obstacle3.x - motionx3
+    if (obstacle1.x < 0) and
+       (obstacle2.x < 0) and
+       (obstacle3.x < 0) then
+       obstacle1.x = 2050
+       obstacle2.x = 2050
+       obstacle3.x = 2050
+   end
+end
+
 -- Stop character movement when no arrow is pushed
 local function stop (event)
     if (event.phase =="ended") then
@@ -132,11 +147,13 @@ end
 
 local function AddRuntimeListeners()
     Runtime:addEventListener("enterFrame", movePlayer)
+    Runtime:addEventListener("enterFrame", moveObsticles)
     Runtime:addEventListener("touch", stop )
 end
 
 local function RemoveRuntimeListeners()
     Runtime:removeEventListener("enterFrame", movePlayer)
+    Runtime:removeEventListener("enterFrame", moveObsticles)
     Runtime:removeEventListener("touch", stop )
 end
 
@@ -194,16 +211,18 @@ local function onCollision( self, event )
     --print( event.target.myName .. ": collision began with " .. event.other.myName )
 
     if ( event.phase == "began" ) then
-        if  (event.target.myName == "obstacle1") or
-            (event.target.myName == "obstacle2") or
-            (event.target.myName == "obstacle3") then
-
+        if  (event.target.myName == "obstacle1") and (event.other.myName == "SkyDragon") or
+            (event.target.myName == "obstacle2") and (event.other.myName == "SkyDragon") or
+            (event.target.myName == "obstacle3") and (event.other.myName == "SkyDragon") then
 
             -- get the ball that the user hit
             theBall = event.target
 
             -- stop the character from moving
             motionx = 0
+            motionx1 = 0
+            motionx2 = 0
+            motionx3 = 0
 
             -- add 1 to answered variable
             answered = answered + 1
@@ -216,9 +235,10 @@ local function onCollision( self, event )
 
             -- Increment questions answered
             answered = answered + 1
-        end
-        if (answered == 3) then
+
+            if (answered == 3) then
             composer.gotoScene(you_win)
+            end
         end
     end
 end
@@ -232,7 +252,6 @@ local function AddCollisionListeners()
     obstacle2:addEventListener( "collision" )
     obstacle3.collision = onCollision
     obstacle3:addEventListener( "collision" )
-
 end
 
 local function RemoveCollisionListeners()
@@ -269,14 +288,14 @@ function ResumeGame()
 
     -- make character visible again
     character.isVisible = true
-    
+
+
     if (answered > 0) then
         if (theBall ~= nil) and (theBall.isBodyActive == true) then
             physics.removeBody(theBall)
             theBall.isVisible = false
         end
     end
-
 end
 
 -----------------------------------------------------------------------------------------
@@ -384,7 +403,7 @@ function scene:create( event )
 
     --obstacle1
     obstacle1 = display.newImageRect ("Images/fireBall.png", 70, 70)
-    obstacle1.x = 610
+    obstacle1.x = 2148
     obstacle1.y = 480
     obstacle1.myName = "obstacle1"
 
@@ -393,7 +412,7 @@ function scene:create( event )
 
     --obstacle2
     obstacle2 = display.newImageRect ("Images/fireBall.png", 70, 70)
-    obstacle2.x = 490
+    obstacle2.x = 2148
     obstacle2.y = 170
     obstacle2.myName = "obstacle2"
 
@@ -402,7 +421,7 @@ function scene:create( event )
 
         --obstacle3
     obstacle3 = display.newImageRect ("Images/fireBall.png", 70, 70)
-    obstacle3.x = 100
+    obstacle3.x = 2148
     obstacle3.y = 500
     obstacle3.myName = "obstacle3"
 
@@ -438,9 +457,6 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
         backgroundSoundChannel = audio.play(backgroundSound)
-
-        numLives = 2
-        questionsAnswered = 0
 
         -- make all soccer balls visible
         MakeSoccerBallsVisible()
