@@ -200,6 +200,7 @@ function scene:create( event )
     sceneGroup:insert( creditsButton )
     sceneGroup:insert( instructionsButton )
     sceneGroup:insert( muteButton )
+    sceneGroup:insert( textObject )
 end -- function scene:create( event )   
 
 -----------------------------------------------------------------------------------------
