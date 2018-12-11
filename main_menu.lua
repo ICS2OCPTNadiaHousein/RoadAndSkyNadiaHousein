@@ -51,6 +51,7 @@ local instructionsButton
 
 local muteButton
 local textObject
+local soundOn = true
 
 
 -----------------------------------------------------------------------------------------
@@ -76,6 +77,16 @@ end
 local function InstructionsScreenTransition( )
     composer.gotoScene( "instructions_screen", {effect = "slideDown", time = 1000})
 end 
+
+local function MuteButton( )
+    if (soundOn == true) then
+        audio.setVolume(0)
+        soundOn = false
+    else
+        audio.setVolume(1)
+        soundOn = true
+    end
+end
 
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 
 
@@ -190,6 +201,8 @@ function scene:create( event )
             -- Insert the images here
             defaultFile = "Images/muteUnpressed.png",
             overFile = "Images/mutePressed.png",
+
+            onRelease = MuteButton
 
         } )
 
