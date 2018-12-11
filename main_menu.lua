@@ -50,6 +50,9 @@ local creditsButton
 local instructionsButton
 
 local muteButton
+local textObject
+
+
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -103,6 +106,16 @@ function scene:create( event )
 
     -- Send the background image to the back layer so all other objects can be on top
     bkg_image:toBack()
+
+
+    -----------------------------------------------------------------------------------------
+    -- TEXT
+    -----------------------------------------------------------------------------------------   
+    -- displays text on the screen at posistion x = 500 and y = 500 with 
+    -- a default font style and font size of 50
+    textObject = display.newText( "ROAD & SKY", 500, 300, nil, 100)
+    -- sets the color of the text
+    textObject:setTextColor(100/255, 55/255, 120/255)
 
     -----------------------------------------------------------------------------------------
     -- BUTTON WIDGETS
