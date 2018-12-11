@@ -82,11 +82,16 @@ local function MuteButton( )
     if (soundOn == true) then
         audio.setVolume(0)
         soundOn = false
-    else
+    elseif (soundOn == false) then
         audio.setVolume(1)
         soundOn = true
     end
 end
+
+    function BackgroundMusic()
+        backgroundMusicChannel = audio.play(backgroundSound)
+        timer.peformWithDelay(BackgroundMusic, 177000)
+    end
 
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 
 
