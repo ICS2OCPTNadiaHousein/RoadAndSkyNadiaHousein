@@ -50,6 +50,10 @@ local creditsButton
 local instructionsButton
 
 local muteButton
+local textObject
+local soundOn = true
+
+
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -73,6 +77,16 @@ end
 local function InstructionsScreenTransition( )
     composer.gotoScene( "instructions_screen", {effect = "slideDown", time = 1000})
 end 
+
+local function MuteButton( )
+    if (soundOn == true) then
+        audio.setVolume(0)
+        soundOn = false
+    else
+        audio.setVolume(1)
+        soundOn = true
+    end
+end
 
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 
 
@@ -103,6 +117,16 @@ function scene:create( event )
 
     -- Send the background image to the back layer so all other objects can be on top
     bkg_image:toBack()
+
+
+    -----------------------------------------------------------------------------------------
+    -- TEXT
+    -----------------------------------------------------------------------------------------   
+    -- displays text on the screen at posistion x = 500 and y = 500 with 
+    -- a default font style and font size of 50
+    textObject = display.newText( "ROAD & SKY", 500, 300, nil, 100)
+    -- sets the color of the text
+    textObject:setTextColor(100/255, 55/255, 120/255)
 
     -----------------------------------------------------------------------------------------
     -- BUTTON WIDGETS
@@ -178,6 +202,8 @@ function scene:create( event )
             defaultFile = "Images/muteUnpressed.png",
             overFile = "Images/mutePressed.png",
 
+            onRelease = MuteButton
+
         } )
 
     -----------------------------------------------------------------------------------------
@@ -187,6 +213,7 @@ function scene:create( event )
     sceneGroup:insert( creditsButton )
     sceneGroup:insert( instructionsButton )
     sceneGroup:insert( muteButton )
+    sceneGroup:insert( textObject )
 end -- function scene:create( event )   
 
 -----------------------------------------------------------------------------------------
