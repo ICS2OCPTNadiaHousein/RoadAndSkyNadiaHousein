@@ -238,6 +238,7 @@ local function onCollision( self, event )
 
             if (answered == 3) then
             composer.gotoScene(you_win)
+                YouWinTransition()
             end
         end
     end
@@ -277,7 +278,6 @@ local function RemovePhysicsBodies()
     physics.removeBody(rightW)
     physics.removeBody(topW)
     physics.removeBody(floor)
- 
 end
 
 -----------------------------------------------------------------------------------------
@@ -333,7 +333,7 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( heart2 )
 
-        -- Insert the Hearts
+    -- Insert the Hearts
     heart3 = display.newImageRect("Images/heart.png", 80, 80)
     heart3.x = 210
     heart3.y = 50
@@ -419,7 +419,7 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( obstacle2 )
 
-        --obstacle3
+    --obstacle3
     obstacle3 = display.newImageRect ("Images/fireBall.png", 70, 70)
     obstacle3.x = 2148
     obstacle3.y = 500
