@@ -15,7 +15,7 @@
 local backgroundSound = audio.loadSound( "Sounds/vehicle.mp3" )
 local backgroundSoundChannel
 
-local buttonSound = audio.loadSound( "Sounds/buttonPressed.mp3 ")
+local buttonSound = audio.loadSound( "Sounds/buttonPressed.mp3")
 local buttonSoundChannel
 
 -----------------------------------------------------------------------------------------
