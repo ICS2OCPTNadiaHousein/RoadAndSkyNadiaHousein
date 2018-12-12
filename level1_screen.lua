@@ -415,7 +415,7 @@ function scene:create( event )
     sceneGroup:insert( floor )
 
     --obstacle1
-    obstacle1 = display.newImageRect ("Images/fireBall.png", 70, 70)
+    obstacle1 = display.newImageRect ("Images/fireball.png", 70, 70)
     obstacle1.x = 2148
     obstacle1.y = 480
     obstacle1.myName = "obstacle1"
@@ -424,7 +424,7 @@ function scene:create( event )
     sceneGroup:insert( obstacle1 )
 
     --obstacle2
-    obstacle2 = display.newImageRect ("Images/fireBall.png", 70, 70)
+    obstacle2 = display.newImageRect ("Images/fireball.png", 70, 70)
     obstacle2.x = 2148
     obstacle2.y = 170
     obstacle2.myName = "obstacle2"
@@ -433,7 +433,7 @@ function scene:create( event )
     sceneGroup:insert( obstacle2 )
 
     --obstacle3
-    obstacle3 = display.newImageRect ("Images/fireBall.png", 70, 70)
+    obstacle3 = display.newImageRect ("Images/fireball.png", 70, 70)
     obstacle3.x = 2148
     obstacle3.y = 700
     obstacle3.myName = "obstacle3"
