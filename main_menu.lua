@@ -90,7 +90,7 @@ end
 
     function BackgroundMusic()
         backgroundMusicChannel = audio.play(backgroundSound)
-        timer.peformWithDelay(BackgroundMusic, 177000)
+        timer.peformWithDelay(BackgroundMusic, 8300)
     end
 
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 

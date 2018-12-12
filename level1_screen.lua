@@ -60,9 +60,11 @@ local SPEED = 8
 local LINEAR_VELOCITY = -255
 local LINEAR_VELOCITY2 = 255
 local GRAVITY = 5
-local motionx1 = 8
-local motionx2 = 7
-local motionx3 = 6
+
+local motionxBall1 
+local motionxBall2
+local motionxBall3
+local motionxBall = 10
 
 local leftW
 local rightW
@@ -109,17 +111,33 @@ local function movePlayer (event)
     character.x = character.x + motionx
 end
 
+local function resetObstacles()
+    motionxBall = 10
+    motionxBall1 = math.random(7, 10)
+    motionxBall2 = math.random(7, 10)
+    motionxBall3 = math.random(7, 10)
+
+    LINEAR_VELOCITY = -255
+    LINEAR_VELOCITY2 = 255
+
+    obstacle1.x = display.contentWidth
+    obstacle2.x = display.contentWidth
+    obstacle3.x = display.contentWidth
+
+    obstacle1.y = math.random(0, display.contentHeight)
+    obstacle2.y = math.random(0, display.contentHeight)
+    obstacle3.y = math.random(0, display.contentHeight)
+end
+
 -- Moves the obsticles
-function moveObsticles()
-    obstacle1.x = obstacle1.x - motionx1
-    obstacle2.x = obstacle2.x - motionx2
-    obstacle3.x = obstacle3.x - motionx3
+local function moveObstacles()
+    obstacle1.x = obstacle1.x - motionxBall1
+    obstacle2.x = obstacle2.x - motionxBall2
+    obstacle3.x = obstacle3.x - motionxBall3
     if (obstacle1.x < 0) and
        (obstacle2.x < 0) and
        (obstacle3.x < 0) then
-       obstacle1.x = 2050
-       obstacle2.x = 2050
-       obstacle3.x = 2050
+       resetObstacles()
    end
 end
 
@@ -147,13 +165,13 @@ end
 
 local function AddRuntimeListeners()
     Runtime:addEventListener("enterFrame", movePlayer)
-    Runtime:addEventListener("enterFrame", moveObsticles)
+    
     Runtime:addEventListener("touch", stop )
 end
 
 local function RemoveRuntimeListeners()
     Runtime:removeEventListener("enterFrame", movePlayer)
-    Runtime:removeEventListener("enterFrame", moveObsticles)
+    
     Runtime:removeEventListener("touch", stop )
 end
 
@@ -220,9 +238,9 @@ local function onCollision( self, event )
 
             -- stop the character from moving
             motionx = 0
-            motionx1 = 0
-            motionx2 = 0
-            motionx3 = 0
+            motionxBall1 = 0
+            motionxBall2 = 0
+            motionxBall3 = 0
 
             -- add 1 to answered variable
             answered = answered + 1
@@ -234,12 +252,8 @@ local function onCollision( self, event )
             composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
 
             -- Increment questions answered
-            answered = answered + 1
 
-            if (answered == 3) then
-            composer.gotoScene(you_win)
-                YouWinTransition()
-            end
+            
         end
     end
 end
@@ -288,13 +302,12 @@ function ResumeGame()
 
     -- make character visible again
     character.isVisible = true
+    
 
+    resetObstacles()
 
-    if (answered > 0) then
-        if (theBall ~= nil) and (theBall.isBodyActive == true) then
-            physics.removeBody(theBall)
-            theBall.isVisible = false
-        end
+    if (answered == 3) then
+        YouWinTransition()
     end
 end
 
@@ -361,7 +374,7 @@ function scene:create( event )
     --Insert the left arrow
     uArrow = display.newImageRect("Images/UpArrowUnpressed.png", 50, 100)
     uArrow.x = display.contentWidth * 8.2 / 10
-    uArrow.y = 600
+    uArrow.y = 580
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( uArrow)
@@ -422,7 +435,7 @@ function scene:create( event )
     --obstacle3
     obstacle3 = display.newImageRect ("Images/fireBall.png", 70, 70)
     obstacle3.x = 2148
-    obstacle3.y = 500
+    obstacle3.y = 700
     obstacle3.myName = "obstacle3"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
@@ -472,6 +485,9 @@ function scene:show( event )
 
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
+        resetObstacles()
+
+        Runtime:addEventListener("enterFrame", moveObstacles)
 
     end
 
@@ -502,6 +518,7 @@ function scene:hide( event )
         RemovePhysicsBodies()
 
         physics.stop()
+        Runtime:removeEventListener("enterFrame", moveObstacles)
         RemoveArrowEventListeners()
         RemoveRuntimeListeners()
         display.remove(character)
