@@ -59,7 +59,7 @@ local motionx = 0
 local SPEED = 8
 local LINEAR_VELOCITY = -255
 local LINEAR_VELOCITY2 = 255
-local GRAVITY = 5
+local GRAVITY = 0
 
 local motionxBall1 
 local motionxBall2
@@ -124,9 +124,9 @@ local function resetObstacles()
     obstacle2.x = display.contentWidth
     obstacle3.x = display.contentWidth
 
-    obstacle1.y = math.random(0, display.contentHeight)
-    obstacle2.y = math.random(0, display.contentHeight)
-    obstacle3.y = math.random(0, display.contentHeight)
+    obstacle1.y = math.random(0, 100)
+    obstacle2.y = math.random(275, 400)
+    obstacle3.y = math.random(560, 770)
 end
 
 -- Moves the obsticles
@@ -237,6 +237,7 @@ local function onCollision( self, event )
             theBall = event.target
 
             -- stop the character from moving
+            character.y = character.y
             motionx = 0
             motionxBall1 = 0
             motionxBall2 = 0

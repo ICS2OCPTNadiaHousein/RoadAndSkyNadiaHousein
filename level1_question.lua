@@ -90,18 +90,19 @@ end
 local function TouchListenerWrongAnswer(touch)
     userAnswer = wrongText1.text
     numLives = numLives - 1
-                if (numLives == 0) then
+    print(numLives)
+                if (numLives == 3) then
                 -- update hearts
                 heart1.isVisible = false
                 heart2.isVisible = true
                 heart3.isVisible = true
                 timer.performWithDelay(200, ReplaceCharacter) 
-            elseif (numLives == -1) then
+            elseif (numLives == 2) then
                 heart1.isVisible = false
                 heart2.isVisible = false
                 heart3.isVisible = true
                 timer.performWithDelay(200, ReplaceCharacter) 
-            elseif (numLives == -3) then              
+            elseif (numLives == 0) then              
                 -- update hearts
                 heart1.isVisible = false
                 heart2.isVisible = false
