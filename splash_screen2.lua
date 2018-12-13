@@ -57,7 +57,7 @@ end
 local function PlaySound()
     wooshChannel = audio.play(woosh)
 end
-timer.performWithDelay(1000, PlaySound)
+timer.performWithDelay(1070, PlaySound)
 
 -- Function: MoveLogo
 -- Input: This function accepts an event listener
@@ -88,7 +88,7 @@ function scene:create( event )
     local sceneGroup = self.view
 
     -- set the background colour
-    display.setDefault ("background", 132/255, 119/255, 254/255)
+    display.setDefault ("background", 0/255, 0/255, 0/255)
 
     -----------------------------------------------------------------------------------------
     -- BACKGROUND IMAGE & STATIC OBJECTS
@@ -133,7 +133,7 @@ function scene:show( event )
 
         Runtime:addEventListener("enterFrame", MoveLogo) 
 
-        timer.performWithDelay( 4000, gotoMainMenu )
+        timer.performWithDelay( 5000, gotoMainMenu )
     end
 
 end -- function scene:show( event )
