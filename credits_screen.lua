@@ -11,7 +11,7 @@
 -- SOUNDS
 -----------------------------------------------------------------------------------------
 -- Background sound
-local backgroundSound = audio.loadSound( "Sounds/background4.mp3" )
+local backgroundSound = audio.loadStream( "Sounds/background4.mp3" )
 local backgroundSoundChannel
 
 -----------------------------------------------------------------------------------------

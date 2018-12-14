@@ -12,7 +12,7 @@
 -----------------------------------------------------------------------------------------
 
 -- Background sound
-local backgroundSound = audio.loadSound( "Sounds/vehicle.mp3" )
+local backgroundSound = audio.loadStream( "Sounds/vehicle.mp3" )
 local backgroundSoundChannel
 
 local buttonSound = audio.loadSound( "Sounds/buttonPressed.mp3")

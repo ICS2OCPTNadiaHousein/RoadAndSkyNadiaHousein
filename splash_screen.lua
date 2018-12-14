@@ -35,7 +35,7 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 -- Background sound
-local backgroundSound = audio.loadSound( "Sounds/background.mp3" )
+local backgroundSound = audio.loadStream( "Sounds/background.mp3" )
 local backgroundSoundChannel
 
 
