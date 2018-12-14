@@ -102,7 +102,7 @@ local function TouchListenerWrongAnswer(touch)
                 heart2.isVisible = false
                 heart3.isVisible = true
                 timer.performWithDelay(200, ReplaceCharacter) 
-            elseif (numLives == 0) then              
+            elseif (numLives == 1) then              
                 -- update hearts
                 heart1.isVisible = false
                 heart2.isVisible = false
