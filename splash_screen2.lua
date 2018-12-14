@@ -57,7 +57,7 @@ end
 local function PlaySound()
     wooshChannel = audio.play(woosh)
 end
-timer.performWithDelay(1070, PlaySound)
+timer.performWithDelay(1996, PlaySound)
 
 -- Function: MoveLogo
 -- Input: This function accepts an event listener
@@ -69,7 +69,7 @@ local function MoveLogo(event)
 
     if (companyLogo.y > display.contentCenterY) then
         scrollSpeedCompanyLogo = 0
-        companyLogo.alpha = companyLogo.alpha - 0.007
+        companyLogo.alpha = companyLogo.alpha - 0.019
     end
 end
   
