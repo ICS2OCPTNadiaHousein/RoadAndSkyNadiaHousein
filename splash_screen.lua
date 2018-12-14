@@ -119,7 +119,7 @@ function scene:show( event )
        
     -----------------------------------------------------------------------------------------
     
-    backgroundSoundChannel = audio.play(backgroundSound)
+    backgroundSoundChannel = audio.play(backgroundSound {channel=3, loops=-1})
 
 
     -- Called when the scene is now on screen.

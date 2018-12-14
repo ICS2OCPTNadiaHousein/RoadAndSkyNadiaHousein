@@ -127,7 +127,7 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-        backgroundSoundChannel = audio.play(backgroundSound)
+        backgroundSoundChannel = audio.play(backgroundSound {channel=5, loops=-1})
     end
 
 end -- function scene:show( event )
