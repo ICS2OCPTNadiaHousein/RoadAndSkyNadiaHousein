@@ -13,7 +13,7 @@
 -----------------------------------------------------------------------------------------
 -- Background sound
 local backgroundSound = audio.loadSound( "Sounds/background2.mp3" )
-local backgroundSoundChannel = audio.play(backgroundSound,{channel=1,loops=-1})
+local backgroundSoundChannel
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
