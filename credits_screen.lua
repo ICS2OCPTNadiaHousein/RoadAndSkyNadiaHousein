@@ -11,8 +11,8 @@
 -- SOUNDS
 -----------------------------------------------------------------------------------------
 -- Background sound
-local backgroundSound = audio.loadStream( "Sounds/background4.mp3" )
-local backgroundSoundChannel
+--local backgroundSound = audio.loadStream( "Sounds/background4.mp3" )
+--local backgroundSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
@@ -127,7 +127,7 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-        backgroundSoundChannel = audio.play(backgroundSound {channel=5, loops=-1})
+        --backgroundSoundChannel = audio.play(backgroundSound {channel=5, loops=-1})
     end
 
 end -- function scene:show( event )
@@ -150,7 +150,7 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-        audio.stop(backgroundSoundChannel)
+        --audio.stop(backgroundSoundChannel)
 
     -----------------------------------------------------------------------------------------
 
