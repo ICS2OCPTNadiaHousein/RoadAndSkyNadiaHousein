@@ -10,6 +10,10 @@
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
 
+
+-- set the background colour
+display.setDefault ("background", 132/255, 119/255, 254/255)
+
 -- Use Composer Library
 local composer = require( "composer" )
 
@@ -66,9 +70,6 @@ function scene:create( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
-    -- set the background colour
-    display.setDefault ("background", 132/255, 119/255, 254/255)
-
     -----------------------------------------------------------------------------------------
     -- BACKGROUND IMAGE & STATIC OBJECTS
     -----------------------------------------------------------------------------------------
@@ -119,7 +120,7 @@ function scene:show( event )
        
     -----------------------------------------------------------------------------------------
     
-    backgroundSoundChannel = audio.play(backgroundSound {channel=3, loops=-1})
+    backgroundSoundChannel = audio.play(backgroundSound)
 
 
     -- Called when the scene is now on screen.
