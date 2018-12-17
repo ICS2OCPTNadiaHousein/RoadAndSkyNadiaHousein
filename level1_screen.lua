@@ -12,8 +12,8 @@
 -- SOUNDS
 -----------------------------------------------------------------------------------------
 -- Background sound
-local backgroundSound = audio.loadStream( "Sounds/background2.mp3" )
-local backgroundSoundChannel
+local backgroundSound = audio.loadSound( "Sounds/background2.mp3" )
+local backgroundSoundChannel = audio.play(backgroundSound,{channel=1,loops=-1})
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
@@ -57,8 +57,7 @@ local dArrow
 
 local motionx = 0
 local SPEED = 8
-local LINEAR_VELOCITY = -255
-local LINEAR_VELOCITY2 = 255
+local motiony = 0
 local GRAVITY = 0
 
 local motionxBall1 
@@ -94,21 +93,18 @@ end
 
 -- When up arrow is touched, add vertical so it can jump
 local function up (touch)
-    if (character ~= nil) then
-        character:setLinearVelocity( 0, LINEAR_VELOCITY )
-    end
+    motiony = -SPEED
 end
 
 -- When up arrow is touched, add vertical so it can jump
 local function down (touch)
-    if (character ~= nil) then
-        character:setLinearVelocity( 0, LINEAR_VELOCITY2 )
-    end
+    motiony = SPEED
 end
 
 -- Move character horizontally
 local function movePlayer (event)
     character.x = character.x + motionx
+    character.y = character.y + motiony
 end
 
 local function resetObstacles()
@@ -237,8 +233,8 @@ local function onCollision( self, event )
             theBall = event.target
 
             -- stop the character from moving
-            character.y = character.y
             motionx = 0
+            motiony = 0
             motionxBall1 = 0
             motionxBall2 = 0
             motionxBall3 = 0
