@@ -237,7 +237,7 @@ local function onCollision( self, event )
             motionxBall3 = 0
 
             -- add 1 to answered variable
-            answered = answered + 1
+            --answered = answered + 1
 
             -- make the character invisible
             character.isVisible = false
