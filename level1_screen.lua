@@ -30,10 +30,14 @@ local physics = require("physics")
 -- Naming Scene
 sceneName = "level1_screen"
 
------------------------------------------------------------------------------------------
-
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
+
+-----------------------------------------------------------------------------------------
+-- GLOBAL VARIABLES
+-----------------------------------------------------------------------------------------
+
+numLives = 3
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -44,11 +48,11 @@ local bkg_image
 
 local character
 
- heart1 = nil
- heart2 = nil
- heart3 = nil
- numLives = 4
- answered = 0
+local heart1
+local heart2
+local heart3
+ 
+local answered = 0
 
 local rArrow
 local lArrow
@@ -229,6 +233,8 @@ local function onCollision( self, event )
             -- get the ball that the user hit
             theBall = event.target
 
+            print ("***Collided with obstacle")
+
             -- stop the character from moving
             motionx = 0
             motiony = 0
@@ -237,15 +243,13 @@ local function onCollision( self, event )
             motionxBall3 = 0
 
             -- add 1 to answered variable
-            --answered = answered + 1
+            answered = answered + 1
 
             -- make the character invisible
             character.isVisible = false
 
             -- show overlay with math question
             composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
-
-            -- Increment questions answered
 
             
         end
@@ -288,17 +292,44 @@ local function RemovePhysicsBodies()
     physics.removeBody(floor)
 end
 
+
+local function UpdateHearts()
+
+    print ("***numLives = " .. numLives)
+    if (numLives == 3) then
+        -- update hearts
+        heart1.isVisible = true
+        heart2.isVisible = true
+        heart3.isVisible = true
+    elseif (numLives == 2) then
+        heart1.isVisible = false
+        heart2.isVisible = true
+        heart3.isVisible = true
+ 
+    elseif (numLives == 1) then              
+        -- update hearts
+        heart1.isVisible = false
+        heart2.isVisible = false
+        heart3.isVisible = true
+    elseif (numLives == 0) then
+        heart1.isVisible = false
+        heart2.isVisible = false
+        heart3.isVisible = false
+        timer.performWithDelay(200, YouLoseTransition)
+     end
+end
+
 -----------------------------------------------------------------------------------------
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeGame()
+function ResumeLevel1()
 
     -- make character visible again
     character.isVisible = true
-    
 
     resetObstacles()
+    UpdateHearts()
 
     if (answered == 3) then
         YouWinTransition()
@@ -464,6 +495,9 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
         backgroundSoundChannel = audio.play(backgroundSound, { channel=1, loops=-1})
+
+        -- set the number of lives
+        numLives = 3
 
         -- make all soccer balls visible
         MakeSoccerBallsVisible()

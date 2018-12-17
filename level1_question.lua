@@ -44,9 +44,9 @@ local wrongAnswer2
 local wrongAnswer3
 
 local answerText 
-local wrongAnswerText1
-local wrongAnswerText2
-local wrongAnswerText3
+local wrongText1
+local wrongText2
+local wrongText3
 
 local answerPosition = 1
 local bkg
@@ -58,28 +58,21 @@ local Y1 = display.contentHeight*1/2
 local Y2 = display.contentHeight*5.5/7
 
 local userAnswer
-local textTouched = false
 
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-local function YouLoseTransition()
-    composer.gotoScene( "you_lose" )
-end
-
 --making transition to next scene
 local function BackToLevel1() 
     composer.hideOverlay("crossFade", 400 )
 
-    ResumeGame()
+    ResumeLevel1()
 end 
 
 -----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
-    userAnswer = answerText.text
-    answered = answered + 1
     
     if (touch.phase == "ended") then
         BackToLevel1( )
@@ -89,30 +82,11 @@ end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer(touch)
-    userAnswer = wrongText1.text
-    numLives = numLives - 1
-    print(numLives)
-                if (numLives == 3) then
-                -- update hearts
-                heart1.isVisible = false
-                heart2.isVisible = true
-                heart3.isVisible = true
-                timer.performWithDelay(200, ReplaceCharacter) 
-            elseif (numLives == 2) then
-                heart1.isVisible = false
-                heart2.isVisible = false
-                heart3.isVisible = true
-                timer.performWithDelay(200, ReplaceCharacter) 
-            elseif (numLives == 1) then              
-                -- update hearts
-                heart1.isVisible = false
-                heart2.isVisible = false
-                heart3.isVisible = false
-                timer.performWithDelay(200, YouLoseTransition)
-            end
     
+                 
     if (touch.phase == "ended") then
-        
+        numLives = numLives - 1
+        print ("***numLives:TouchListenerWrongAnswer = " .. numLives)
         BackToLevel1( )
         
         
@@ -121,28 +95,13 @@ end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer2(touch)
-    userAnswer = wrongText2.text
-    numLives = numLives - 1
-                if (numLives == 0) then
-                -- update hearts
-                heart1.isVisible = false
-                heart2.isVisible = true
-                heart3.isVisible = true
-                timer.performWithDelay(200, ReplaceCharacter) 
-            elseif (numLives == -1) then
-                heart1.isVisible = false
-                heart2.isVisible = false
-                heart3.isVisible = true
-                timer.performWithDelay(200, ReplaceCharacter) 
-            elseif (numLives == -3) then              
-                -- update hearts
-                heart1.isVisible = false
-                heart2.isVisible = false
-                heart3.isVisible = false
-                timer.performWithDelay(200, YouLoseTransition)
-            end
+    
+    
+   
     
     if (touch.phase == "ended") then
+        numLives = numLives - 1
+        print ("***numLives:TouchListenerWrongAnswer2 = " .. numLives)
 
         BackToLevel1( )
         
@@ -151,28 +110,12 @@ end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer3(touch)
-    userAnswer = wrongText3.text
-    numLives = numLives - 1
-                if (numLives == 0) then
-                -- update hearts
-                heart1.isVisible = false
-                heart2.isVisible = true
-                heart3.isVisible = true
-                timer.performWithDelay(200, ReplaceCharacter) 
-            elseif (numLives == -1) then
-                heart1.isVisible = false
-                heart2.isVisible = false
-                heart3.isVisible = true
-                timer.performWithDelay(200, ReplaceCharacter) 
-            elseif (numLives == -4) then              
-                -- update hearts
-                heart1.isVisible = false
-                heart2.isVisible = false
-                heart3.isVisible = false
-                timer.performWithDelay(200, YouLoseTransition)
-            end
+   
     
+
     if (touch.phase == "ended") then
+        numLives = numLives - 1               
+        print ("***numLives:TouchListenerWrongAnswer3 = " .. numLives)
 
         BackToLevel1( )
         
@@ -183,17 +126,20 @@ end
 
 --adding the event listeners 
 local function AddTextListeners ( )
-    answerText:addEventListener( "touch", TouchListenerAnswer )
-    wrongText1:addEventListener( "touch", TouchListenerWrongAnswer)
-    wrongText2:addEventListener( "touch", TouchListenerWrongAnswer2)
-    wrongText3:addEventListener( "touch", TouchListenerWrongAnswer3)
+    answerText:addEventListener("touch", TouchListenerAnswer)
+    wrongText1:addEventListener("touch", TouchListenerWrongAnswer)
+    wrongText2:addEventListener("touch", TouchListenerWrongAnswer2)
+    wrongText3:addEventListener("touch", TouchListenerWrongAnswer3)
+
+
 end
 
 --removing the event listeners
 local function RemoveTextListeners()
-    answerText:removeEventListener( "touch", TouchListenerAnswer )
-    wrongText1:removeEventListener( "touch", TouchListenerWrongAnswer)
-    wrongText2:removeEventListener( "touch", TouchListenerWrongAnswer2)
+    answerText:removeEventListener("touch", TouchListenerAnswer)
+    wrongText1:removeEventListener("touch", TouchListenerWrongAnswer)
+    wrongText2:removeEventListener("touch", TouchListenerWrongAnswer2)
+    wrongText3:removeEventListener("touch", TouchListenerWrongAnswer3)
 end
 
 local function DisplayQuestion()
@@ -225,18 +171,18 @@ end
 local function PositionAnswers()
 
     --creating random start position in a cretain area
-    answerPosition = math.random(1,3)
+    answerPosition = math.random(1, 4)
 
     if (answerPosition == 1) then
 
         answerText.x = X1
         answerText.y = Y1
         
-        wrongText1.x = X2
-        wrongText1.y = Y1
+        wrongText1.x = X1
+        wrongText1.y = Y2
         
-        wrongText2.x = X1
-        wrongText2.y = Y2
+        wrongText2.x = X2
+        wrongText2.y = Y1
 
         wrongText3.x = X2
         wrongText3.y = Y2
@@ -248,10 +194,10 @@ local function PositionAnswers()
         answerText.y = Y2
             
         wrongText1.x = X2
-        wrongText1.y = Y2
+        wrongText1.y = Y1
             
         wrongText2.x = X2
-        wrongText2.y = Y1
+        wrongText2.y = Y2
 
         wrongText3.x = X1
         wrongText3.y = Y1
@@ -260,13 +206,27 @@ local function PositionAnswers()
     elseif (answerPosition == 3) then
 
         answerText.x = X2
-        answerText.y = Y2
+        answerText.y = Y1
             
-        wrongText1.x = X1
+        wrongText1.x = X2
         wrongText1.y = Y2
             
         wrongText2.x = X1
         wrongText2.y = Y1
+
+        wrongText3.x = X1
+        wrongText3.y = Y2
+
+    elseif (answerPosition == 4) then
+
+        answerText.x = X2
+        answerText.y = Y2
+            
+        wrongText1.x = X1
+        wrongText1.y = Y1
+            
+        wrongText2.x = X1
+        wrongText2.y = Y2
 
         wrongText3.x = X2
         wrongText3.y = Y1
