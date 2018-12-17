@@ -113,9 +113,6 @@ local function resetObstacles()
     motionxBall2 = math.random(7, 10)
     motionxBall3 = math.random(7, 10)
 
-    LINEAR_VELOCITY = -255
-    LINEAR_VELOCITY2 = 255
-
     obstacle1.x = display.contentWidth
     obstacle2.x = display.contentWidth
     obstacle3.x = display.contentWidth
