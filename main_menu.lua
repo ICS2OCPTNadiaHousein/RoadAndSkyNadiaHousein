@@ -12,7 +12,7 @@
 -----------------------------------------------------------------------------------------
 
 -- Background sound
-local backgroundSound = audio.loadStream( "Sounds/vehicle.mp3" )
+local backgroundSound = audio.loadSound( "Sounds/vehicle.mp3" )
 local backgroundSoundChannel
 
 local buttonSound = audio.loadSound( "Sounds/buttonPressed.mp3")
@@ -87,11 +87,6 @@ local function MuteButton( )
         soundOn = true
     end
 end
-
-    function BackgroundMusic()
-        backgroundMusicChannel = audio.play(backgroundSound)
-        timer.peformWithDelay(BackgroundMusic, 8300)
-    end
 
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 
 
@@ -234,8 +229,6 @@ function scene:show( event )
 
     -- Called when the scene is still off screen (but is about to come on screen).   
     if ( phase == "will" ) then
-
-        backgroundSoundChannel = audio.play(backgroundSound {channel=2, loops=-1})
        
     -----------------------------------------------------------------------------------------
 
