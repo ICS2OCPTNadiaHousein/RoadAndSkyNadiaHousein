@@ -13,7 +13,7 @@
 -- SOUNDS
 -----------------------------------------------------------------------------------------
 -- Background sound
-local backgroundSound = audio.loadStream( "Sounds/background3.mp3" )
+local backgroundSound = audio.loadSound( "Sounds/background3.mp3" )
 local backgroundSoundChannel
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
@@ -128,7 +128,7 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-        backgroundSoundChannel = audio.play(backgroundSound {channel=4, loops=-1})
+        backgroundSoundChannel = audio.play(backgroundSound)
     end
 
 end -- function scene:show( event )
