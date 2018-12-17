@@ -79,6 +79,7 @@ end
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
     userAnswer = answerText.text
+    answered = answered + 1
     
     if (touch.phase == "ended") then
         BackToLevel1( )
