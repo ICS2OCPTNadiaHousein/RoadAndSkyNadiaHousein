@@ -35,7 +35,7 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 -- Creates "woosh" Sound
-local woosh = audio.loadStream("Sounds/companyLogoSound.mp3")
+local woosh = audio.loadStream("Sounds/CompanyLogoSound.mp3")
 local wooshChannel
 
 

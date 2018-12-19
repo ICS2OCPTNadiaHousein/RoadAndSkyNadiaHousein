@@ -67,7 +67,7 @@ local GRAVITY = 0
 local motionxBall1 
 local motionxBall2
 local motionxBall3
-local motionxBall = 10
+local motionxBall = 6
 
 local leftW
 local rightW
@@ -112,7 +112,7 @@ local function movePlayer (event)
 end
 
 local function resetObstacles()
-    motionxBall = 10
+    motionxBall = 6
     motionxBall1 = math.random(7, 10)
     motionxBall2 = math.random(7, 10)
     motionxBall3 = math.random(7, 10)
