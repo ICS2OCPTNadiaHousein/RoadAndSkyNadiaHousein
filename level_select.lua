@@ -100,7 +100,7 @@ function scene:create( event )
             overFile = "Images/Level2Pressed.png",
   
             -- When the button is released, call the Level1 screen transition function
-            onRelease = Level1ScreenTransition  
+            onRelease = Level2ScreenTransition  
         } )
 
     -----------------------------------------------------------------------------------------
@@ -119,7 +119,7 @@ function scene:create( event )
             overFile = "Images/Level3Pressed.png",
 
             -- When the button is released, call the Credits transition function
-            onRelease = CreditsTransition
+            onRelease = Level3ScreenTransition
             
         } ) 
     -----------------------------------------------------------------------------------------
@@ -138,7 +138,7 @@ function scene:create( event )
             overFile = "Images/Level1Pressed.png",
 
             -- When the button is released, call the Level1 screen transition function
-            onRelease = InstructionsScreenTransition          
+            onRelease = Level2ScreenTransition          
         } )
 
 
