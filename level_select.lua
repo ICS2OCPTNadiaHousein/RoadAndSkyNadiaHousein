@@ -2,9 +2,21 @@
 --
 -- main_menu.lua
 -- Created by: Nadia Coleman
--- Date: November 28th, 2018
--- Description: This is the splash screen, it displays the company logo animation.
+-- Date: November 25th, 2018
+-- Description: This is the main menu, displaying the credits, instructions & play buttons.
 -----------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------
+-- SOUNDS
+-----------------------------------------------------------------------------------------
+
+-- Background sound
+local backgroundSound = audio.loadSound( "Sounds/vehicle.mp3" )
+local backgroundSoundChannel = audio.play(backgroundSound,{channel=1,loops=-1})
+
+local buttonSound = audio.loadSound( "Sounds/buttonPressed.mp3")
+local buttonSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
@@ -21,61 +33,24 @@ local widget = require( "widget" )
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "splash_screen2"
+sceneName = "level_select"
 
 -----------------------------------------------------------------------------------------
 
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
 
-
-
------------------------------------------------------------------------------------------
--- SOUNDS
------------------------------------------------------------------------------------------
-
--- Creates "woosh" Sound
-local woosh = audio.loadStream("Sounds/CompanyLogoSound.mp3")
-local wooshChannel
-
-
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
-local companyLogo
-local scrollSpeedCompanyLogo = 7
+local bkg_image
+
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
-local function gotoMainMenu ()
-    composer.gotoScene( "main_menu" )
-end
 
--- This function plays the sound effect
-local function PlaySound()
-    wooshChannel = audio.play(woosh)
-end
-timer.performWithDelay(1996, PlaySound)
-
--- Function: MoveLogo
--- Input: This function accepts an event listener
--- Output: None
--- Description: This function adds the scroll speed to the y-value of companyLogo
-local function MoveLogo(event)
-    -- Adds the scroll speed to the x-value of pingu
-    companyLogo.y = companyLogo.y + scrollSpeedCompanyLogo
-
-    if (companyLogo.y > display.contentCenterY) then
-        scrollSpeedCompanyLogo = 0
-        companyLogo.alpha = companyLogo.alpha - 0.019
-    end
-end
-  
-
-
--- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
@@ -87,27 +62,95 @@ function scene:create( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
-    -- set the background colour
-    display.setDefault ("background", 0/255, 0/255, 0/255)
-
     -----------------------------------------------------------------------------------------
     -- BACKGROUND IMAGE & STATIC OBJECTS
     -----------------------------------------------------------------------------------------
-    
-    -- Displays the company logo
-    companyLogo = display.newImageRect("Images/CompanyLogoHousein.png", 1024, 769)
-    companyLogo.x = display.contentCenterX
-    companyLogo.y = -display.contentHeight*1.1
 
-    -- Associating button widgets with this scen
-    sceneGroup:insert( companyLogo )
-    
+    --[[-- Insert the background image and set it to the center of the screen
+    bkg_image = display.newImage("Images/level_select.png")
+    bkg_image.x = display.contentCenterX
+    bkg_image.y = display.contentCenterY
+    bkg_image.width = display.contentWidth
+    bkg_image.height = display.contentHeight
 
 
-end -- function scene:create( event )  
+    -- Associating display objects with this scene 
+    sceneGroup:insert( bkg_image )]]
 
 
-----------------------------------------------------------------------------------
+    -----------------------------------------------------------------------------------------
+    -- TEXT
+    -----------------------------------------------------------------------------------------   
+
+    -----------------------------------------------------------------------------------------
+    -- BUTTON WIDGETS
+    -----------------------------------------------------------------------------------------   
+
+    -- Creating Play Button
+    lvl2Button = widget.newButton( 
+        {   
+            -- Set its position on the screen relative to the screen size
+            x = 512,
+            y = display.contentHeight/2,
+            width = 185,
+            height = 185,
+
+            -- Insert the images here
+            defaultFile = "Images/Level2Pressed.png",
+            overFile = "Images/Level2Pressed.png",
+  
+            -- When the button is released, call the Level1 screen transition function
+            onRelease = Level1ScreenTransition  
+        } )
+
+    -----------------------------------------------------------------------------------------
+
+    -- Creating Credits Button
+    lvl3Button = widget.newButton( 
+        {
+            -- Set its position on the screen relative to the screen size
+            x = 748,
+            y = display.contentHeight/2,
+            width = 185,
+            height = 185,
+
+            -- Insert the images here
+            defaultFile = "Images/Level3Pressed.png",
+            overFile = "Images/Level3Pressed.png",
+
+            -- When the button is released, call the Credits transition function
+            onRelease = CreditsTransition
+            
+        } ) 
+    -----------------------------------------------------------------------------------------
+
+    -- Creating Instructions Button
+    lvl1Button = widget.newButton( 
+        {   
+            -- Set its position on the screen relative to the screen size
+            x = 276,
+            y = display.contentHeight/2,
+            width = 185,
+            height = 185,
+
+            -- Insert the images here
+            defaultFile = "Images/Level1Pressed.png",
+            overFile = "Images/Level1Pressed.png",
+
+            -- When the button is released, call the Level1 screen transition function
+            onRelease = InstructionsScreenTransition          
+        } )
+
+
+    -----------------------------------------------------------------------------------------
+
+    -- Associating button widgets with this scene
+    sceneGroup:insert( lvl1Button )
+    sceneGroup:insert( lvl2Button )
+    sceneGroup:insert( lvl3Button )
+end -- function scene:create( event )   
+
+-----------------------------------------------------------------------------------------
 
 -- The function called when the scene is issued to appear on screen
 function scene:show( event )
@@ -129,11 +172,10 @@ function scene:show( event )
     -- Called when the scene is now on screen.
     -- Insert code here to make the scene come alive.
     -- Example: start timers, begin animation, play audio, etc.
-    elseif ( phase == "did" ) then      
+    audio.play(baqckgroundSoundChannel)
+    elseif ( phase == "did" ) then       
+        
 
-        Runtime:addEventListener("enterFrame", MoveLogo) 
-
-        timer.performWithDelay( 5000, gotoMainMenu )
     end
 
 end -- function scene:show( event )
@@ -156,12 +198,13 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
+        --audio.stop(backgroundSoundChannel)
+
 
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
-        -- stop the background sounds channel for this screen
     end
 
 end 

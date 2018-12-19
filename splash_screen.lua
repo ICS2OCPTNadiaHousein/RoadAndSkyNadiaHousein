@@ -73,7 +73,7 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
     -- BACKGROUND IMAGE & STATIC OBJECTS
     -----------------------------------------------------------------------------------------
-    companyLogo = display.newImageRect("Images/CompanyLogoNadiaC@2x.png", 150, 150)
+    companyLogo = display.newImageRect("Images/CompanyLogoNadia.png", 150, 150)
     -- set the company logo X
     companyLogo.x = 500
     -- set the company logo Y
