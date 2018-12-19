@@ -67,7 +67,7 @@ local GRAVITY = 0
 local motionxBall1 
 local motionxBall2
 local motionxBall3
-local motionxBall = 6
+local motionxBall = 4
 
 local leftW
 local rightW
