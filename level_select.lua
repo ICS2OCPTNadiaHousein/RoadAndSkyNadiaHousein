@@ -51,6 +51,20 @@ local bkg_image
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
+-- Creating Transition to Level1 Screen
+local function Level1ScreenTransition( )
+    composer.gotoScene( "level1_screen", {effect = "slideDown", time = 1000})
+end    
+
+-- Creating Transition to Level1 Screen
+local function Level2ScreenTransition( )
+    composer.gotoScene( "level2_screen", {effect = "slideDown", time = 1000})
+end    
+
+-- Creating Transition to Level1 Screen
+local function Level3ScreenTransition( )
+    composer.gotoScene( "level3_screen", {effect = "slideDown", time = 1000})
+end    
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
@@ -66,21 +80,7 @@ function scene:create( event )
     -- BACKGROUND IMAGE & STATIC OBJECTS
     -----------------------------------------------------------------------------------------
 
-    --[[-- Insert the background image and set it to the center of the screen
-    bkg_image = display.newImage("Images/level_select.png")
-    bkg_image.x = display.contentCenterX
-    bkg_image.y = display.contentCenterY
-    bkg_image.width = display.contentWidth
-    bkg_image.height = display.contentHeight
-
-
-    -- Associating display objects with this scene 
-    sceneGroup:insert( bkg_image )]]
-
-
-    -----------------------------------------------------------------------------------------
-    -- TEXT
-    -----------------------------------------------------------------------------------------   
+    display.setDefault("background", 124/255, 249/255, 250/255)
 
     -----------------------------------------------------------------------------------------
     -- BUTTON WIDGETS
