@@ -86,13 +86,13 @@ local theBall
 -- When right arrow is touched, move character right
 local function right (touch)
     motionx = SPEED
-    character.xScale = -1
+    character.xScale = 1
 end
 
 -- When left arrow is touched, move character left
 local function left (touch)
     motionx = -SPEED
-    character.xScale = 1
+    character.xScale = -1
 end
 
 -- When up arrow is touched, add vertical so it can jump
@@ -174,12 +174,12 @@ end
 
 
 local function ReplaceCharacter()
-    character = display.newImageRect("Images/SkyDragon.png", 100, 150)
+    character = display.newImageRect("Images/LavaCar.png", 100, 150)
     character.x = display.contentWidth * 0.5 / 8
     character.y = display.contentHeight  * 0.1 / 3
     character.width = 195
     character.height = 150
-    character.myName = "SkyDragon"
+    character.myName = "LavaCar"
 
     -- intialize horizontal movement of character
     motionx = 0
@@ -226,9 +226,9 @@ local function onCollision( self, event )
     --print( event.target.myName .. ": collision began with " .. event.other.myName )
 
     if ( event.phase == "began" ) then
-        if  (event.target.myName == "obstacle1") and (event.other.myName == "SkyDragon") or
-            (event.target.myName == "obstacle2") and (event.other.myName == "SkyDragon") or
-            (event.target.myName == "obstacle3") and (event.other.myName == "SkyDragon") then
+        if  (event.target.myName == "obstacle1") and (event.other.myName == "LavaCar") or
+            (event.target.myName == "obstacle2") and (event.other.myName == "LavaCar") or
+            (event.target.myName == "obstacle3") and (event.other.myName == "LavaCar") then
 
             -- get the ball that the user hit
             theBall = event.target
@@ -440,7 +440,7 @@ function scene:create( event )
     sceneGroup:insert( floor )
 
     --obstacle1
-    obstacle1 = display.newImageRect ("Images/fireball.png", 70, 70)
+    obstacle1 = display.newImageRect ("Images/HotAirBalloon.png", 70, 70)
     obstacle1.x = 2148
     obstacle1.y = 480
     obstacle1.myName = "obstacle1"
@@ -449,7 +449,7 @@ function scene:create( event )
     sceneGroup:insert( obstacle1 )
 
     --obstacle2
-    obstacle2 = display.newImageRect ("Images/fireball.png", 70, 70)
+    obstacle2 = display.newImageRect ("Images/HotAirBalloon.png", 70, 70)
     obstacle2.x = 2148
     obstacle2.y = 170
     obstacle2.myName = "obstacle2"
@@ -458,7 +458,7 @@ function scene:create( event )
     sceneGroup:insert( obstacle2 )
 
     --obstacle3
-    obstacle3 = display.newImageRect ("Images/fireball.png", 70, 70)
+    obstacle3 = display.newImageRect ("Images/HotAirBalloon.png", 70, 70)
     obstacle3.x = 2148
     obstacle3.y = 700
     obstacle3.myName = "obstacle3"
