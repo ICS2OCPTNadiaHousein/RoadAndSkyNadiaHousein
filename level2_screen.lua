@@ -1,9 +1,9 @@
 -----------------------------------------------------------------------------------------
 --
--- level1_screen.lua
--- Created by: Housein
+-- level2_screen.lua
+-- Created by: Nadia
 -- Date: 6,12,2018
--- Description: This is the level 1 screen of the game.
+-- Description: This is the level 2 screen of the game.
 -----------------------------------------------------------------------------------------
 
 
@@ -28,7 +28,7 @@ local physics = require("physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level1_screen"
+sceneName = "level2_screen"
 
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
@@ -67,7 +67,7 @@ local GRAVITY = 0
 local motionxBall1 
 local motionxBall2
 local motionxBall3
-local motionxBall = 10
+local motionxBall = 4
 
 local leftW
 local rightW
@@ -112,7 +112,7 @@ local function movePlayer (event)
 end
 
 local function resetObstacles()
-    motionxBall = 10
+    motionxBall = 6
     motionxBall1 = math.random(7, 10)
     motionxBall2 = math.random(7, 10)
     motionxBall3 = math.random(7, 10)
@@ -214,7 +214,7 @@ function YouLoseTransition()
 end
 
 function YouWinTransition()
-    composer.gotoScene( "you_win" )
+    composer.gotoScene( "level2_screen" )
 end
 
 local function onCollision( self, event )
@@ -347,7 +347,7 @@ function scene:create( event )
     local sceneGroup = self.view
 
     -- Insert the background image
-    bkg_image = display.newImageRect("Images/Level-1BKG.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImageRect("Images/Level2Screen.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentWidth / 2 
     bkg_image.y = display.contentHeight / 2
 
@@ -440,7 +440,7 @@ function scene:create( event )
     sceneGroup:insert( floor )
 
     --obstacle1
-    obstacle1 = display.newImageRect ("Images/fireball.png", 70, 70)
+    obstacle1 = display.newImageRect ("Images/HotAirBalloon.png", 70, 70)
     obstacle1.x = 2148
     obstacle1.y = 480
     obstacle1.myName = "obstacle1"
@@ -449,7 +449,7 @@ function scene:create( event )
     sceneGroup:insert( obstacle1 )
 
     --obstacle2
-    obstacle2 = display.newImageRect ("Images/fireball.png", 70, 70)
+    obstacle2 = display.newImageRect ("Images/HotAirBalloon.png", 70, 70)
     obstacle2.x = 2148
     obstacle2.y = 170
     obstacle2.myName = "obstacle2"
@@ -458,7 +458,7 @@ function scene:create( event )
     sceneGroup:insert( obstacle2 )
 
     --obstacle3
-    obstacle3 = display.newImageRect ("Images/fireball.png", 70, 70)
+    obstacle3 = display.newImageRect ("Images/HotAirBalloon.png", 70, 70)
     obstacle3.x = 2148
     obstacle3.y = 700
     obstacle3.myName = "obstacle3"

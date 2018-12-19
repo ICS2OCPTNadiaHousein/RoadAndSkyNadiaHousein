@@ -10,10 +10,6 @@
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
 
-
--- set the background colour
-display.setDefault ("background", 132/255, 119/255, 254/255)
-
 -- Use Composer Library
 local composer = require( "composer" )
 
@@ -25,7 +21,7 @@ local widget = require( "widget" )
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "splash_screen"
+sceneName = "splash_screen2"
 
 -----------------------------------------------------------------------------------------
 
@@ -38,9 +34,9 @@ local scene = composer.newScene( sceneName )
 -- SOUNDS
 -----------------------------------------------------------------------------------------
 
--- Background sound
-local backgroundSound = audio.loadStream( "Sounds/background.mp3" )
-local backgroundSoundChannel
+-- Creates "woosh" Sound
+local woosh = audio.loadStream("Sounds/CompanyLogoSound.mp3")
+local wooshChannel
 
 
 -----------------------------------------------------------------------------------------
@@ -48,12 +44,33 @@ local backgroundSoundChannel
 -----------------------------------------------------------------------------------------
 
 local companyLogo
+local scrollSpeedCompanyLogo = 7
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
-local function goToSplash_Screen2 ()
-    composer.gotoScene( "splash_screen2" )
+local function gotoMainMenu ()
+    composer.gotoScene( "main_menu" )
+end
+
+-- This function plays the sound effect
+local function PlaySound()
+    wooshChannel = audio.play(woosh)
+end
+timer.performWithDelay(1996, PlaySound)
+
+-- Function: MoveLogo
+-- Input: This function accepts an event listener
+-- Output: None
+-- Description: This function adds the scroll speed to the y-value of companyLogo
+local function MoveLogo(event)
+    -- Adds the scroll speed to the x-value of pingu
+    companyLogo.y = companyLogo.y + scrollSpeedCompanyLogo
+
+    if (companyLogo.y > display.contentCenterY) then
+        scrollSpeedCompanyLogo = 0
+        companyLogo.alpha = companyLogo.alpha - 0.019
+    end
 end
   
 
@@ -70,35 +87,24 @@ function scene:create( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
+    -- set the background colour
+    display.setDefault ("background", 0/255, 0/255, 0/255)
+
     -----------------------------------------------------------------------------------------
     -- BACKGROUND IMAGE & STATIC OBJECTS
     -----------------------------------------------------------------------------------------
-    companyLogo = display.newImageRect("Images/CompanyLogoNadiaC@2x.png", 150, 150)
-    -- set the company logo X
-    companyLogo.x = 500
-    -- set the company logo Y
-    companyLogo.y = 500
+    
+    -- Displays the company logo
+    companyLogo = display.newImageRect("Images/CompanyLogoHouseinS@2x.png", 1024, 769)
+    companyLogo.x = display.contentCenterX
+    companyLogo.y = -display.contentHeight*1.1
 
     -- Associating button widgets with this scen
     sceneGroup:insert( companyLogo )
     
 
 
-end -- function scene:create( event )   
-
-
-local function ScaleLogo()
-    companyLogo:scale(1.01, 1.01)
-   
-    -- Call the scaleCompanyLogo function as soon as we enter the frame.
-    
-end
-
-local function GrowCompanyLogo()
-    
-    transition.to(companyLogo, {x=500, y=500, time=3000})
-
-end
+end -- function scene:create( event )  
 
 
 ----------------------------------------------------------------------------------
@@ -119,20 +125,15 @@ function scene:show( event )
     if ( phase == "will" ) then
        
     -----------------------------------------------------------------------------------------
-    
-    backgroundSoundChannel = audio.play(backgroundSound)
-
 
     -- Called when the scene is now on screen.
     -- Insert code here to make the scene come alive.
     -- Example: start timers, begin animation, play audio, etc.
     elseif ( phase == "did" ) then      
 
-        Runtime:addEventListener("enterFrame", ScaleLogo) 
+        Runtime:addEventListener("enterFrame", MoveLogo) 
 
-        transition.to(companyLogo, {rotation=360, time=3000, onComplete=spinImage})
-
-        timer.performWithDelay( 3000, goToSplash_Screen2 )
+        timer.performWithDelay( 5000, gotoMainMenu )
     end
 
 end -- function scene:show( event )
@@ -161,7 +162,6 @@ function scene:hide( event )
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
         -- stop the background sounds channel for this screen
-        audio.stop(backgroundSoundChannel)
     end
 
 end 
