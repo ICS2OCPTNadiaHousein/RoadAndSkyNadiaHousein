@@ -138,7 +138,7 @@ function scene:create( event )
             overFile = "Images/Level1Pressed.png",
 
             -- When the button is released, call the Level1 screen transition function
-            onRelease = Level2ScreenTransition          
+            onRelease = Level1ScreenTransition          
         } )
 
 
