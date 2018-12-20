@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------------------
 --
--- level1_screen.lua
--- Created by: Housein
+-- level2_screen.lua
+-- Created by: Nadia
 -- Date: 6,12,2018
 -- Description: This is the level 2 screen of the game.
 -----------------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ local GRAVITY = 0
 local motionxBall1 
 local motionxBall2
 local motionxBall3
-local motionxBall = 10
+local motionxBall = 4
 
 local leftW
 local rightW
@@ -112,7 +112,7 @@ local function movePlayer (event)
 end
 
 local function resetObstacles()
-    motionxBall = 10
+    motionxBall = 6
     motionxBall1 = math.random(7, 10)
     motionxBall2 = math.random(7, 10)
     motionxBall3 = math.random(7, 10)
@@ -347,7 +347,7 @@ function scene:create( event )
     local sceneGroup = self.view
 
     -- Insert the background image
-    bkg_image = display.newImageRect("Images/Level-1BKG.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImageRect("Images/Level2Screen.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentWidth / 2 
     bkg_image.y = display.contentHeight / 2
 
