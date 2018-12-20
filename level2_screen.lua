@@ -3,7 +3,7 @@
 -- level1_screen.lua
 -- Created by: Housein
 -- Date: 6,12,2018
--- Description: This is the level 1 screen of the game.
+-- Description: This is the level 2 screen of the game.
 -----------------------------------------------------------------------------------------
 
 
@@ -28,7 +28,7 @@ local physics = require("physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level1_screen"
+sceneName = "level2_screen"
 
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
