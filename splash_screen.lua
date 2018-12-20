@@ -35,8 +35,8 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 -- Background sound
-local backgroundSound = audio.loadStream( "Sounds/background.mp3" )
-local backgroundSoundChannel
+local backgroundSound = audio.loadSound( "Sounds/background.mp3" )
+local backgroundSoundChannel = audio.play(backgroundSound)
 
 
 -----------------------------------------------------------------------------------------
@@ -119,7 +119,7 @@ function scene:show( event )
        
     -----------------------------------------------------------------------------------------
     
-    backgroundSoundChannel = audio.play(backgroundSound {channel=3, loops=-1})
+    --backgroundSoundChannel = audio.play(backgroundSound {channel=3, loops=-1})
 
 
     -- Called when the scene is now on screen.
