@@ -5,6 +5,15 @@
 --
 -----------------------------------------------------------------------------------------
 
+
+
+-----------------------------------------------------------------------------------------
+-- SOUNDS
+-----------------------------------------------------------------------------------------
+-- Background sound
+local backgroundSound = audio.loadSound( "Sounds/youLose.mp3" )
+local backgroundSoundChannel = audio.play(backgroundSound)
+
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
@@ -76,7 +85,7 @@ function scene:show( event )
 
     if ( phase == "will" ) then
         -- Called when the scene is still off screen (but is about to come on screen).
-
+        backgroundSoundChannel = audio.play(backgroundSound)
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
@@ -106,6 +115,7 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
+        backgroundSoundChannel = audio.stop(backgroundSound)
 
     -----------------------------------------------------------------------------------------
 

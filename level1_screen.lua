@@ -52,7 +52,7 @@ local heart1
 local heart2
 local heart3
  
-local answered = 0
+ answered = 0
 
 local rArrow
 local lArrow
@@ -244,8 +244,7 @@ local function onCollision( self, event )
             LINEAR_VELOCITY = 0
             LINEAR_VELOCITY2 = 0
 
-            -- add 1 to answered variable
-            answered = answered + 1
+
 
             -- make the character invisible
             character.isVisible = false
