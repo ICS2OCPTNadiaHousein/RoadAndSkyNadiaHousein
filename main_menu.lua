@@ -14,6 +14,7 @@
 -- Background sound
 local backgroundSound = audio.loadSound( "Sounds/vehicle.mp3" )
 local backgroundSoundChannel
+local backgroundSoundChannel = audio.play(backgroundSound,{channel=1,loops=-1})
 
 local buttonSound = audio.loadSound( "Sounds/buttonPressed.mp3")
 local buttonSoundChannel
@@ -66,8 +67,8 @@ end
 -----------------------------------------------------------------------------------------
 
 -- Creating Transition to Level1 Screen
-local function Level1ScreenTransition( )
-    composer.gotoScene( "level1_screen", {effect = "slideDown", time = 1000})
+local function Level1Select( )
+    composer.gotoScene( "level_select", {effect = "slideDown", time = 1000})
 end    
 
 
@@ -87,11 +88,6 @@ local function MuteButton( )
         soundOn = true
     end
 end
-
-    function BackgroundMusic()
-        backgroundMusicChannel = audio.play(backgroundSound)
-        timer.peformWithDelay(BackgroundMusic, 8300)
-    end
 
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 
 
@@ -119,9 +115,6 @@ function scene:create( event )
 
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg_image )
-
-    -- Send the background image to the back layer so all other objects can be on top
-    bkg_image:toBack()
 
 
     -----------------------------------------------------------------------------------------
@@ -151,7 +144,7 @@ function scene:create( event )
             overFile = "Images/PlayButtonPressed@2x.png",
   
             -- When the button is released, call the Level1 screen transition function
-            onRelease = Level1ScreenTransition  
+            onRelease = Level1Select
         } )
 
     -----------------------------------------------------------------------------------------
@@ -248,6 +241,7 @@ function scene:show( event )
     -- Called when the scene is now on screen.
     -- Insert code here to make the scene come alive.
     -- Example: start timers, begin animation, play audio, etc.
+    audio.play(baqckgroundSoundChannel)
     elseif ( phase == "did" ) then       
         
 
@@ -273,7 +267,7 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-        audio.stop(backgroundSoundChannel)
+        --audio.stop(backgroundSoundChannel)
 
 
     -----------------------------------------------------------------------------------------

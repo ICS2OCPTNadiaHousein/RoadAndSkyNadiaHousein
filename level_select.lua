@@ -2,17 +2,25 @@
 --
 -- main_menu.lua
 -- Created by: Nadia Coleman
--- Date: November 28th, 2018
--- Description: This is the splash screen, it displays the company logo animation.
+-- Date: November 25th, 2018
+-- Description: This is the main menu, displaying the credits, instructions & play buttons.
 -----------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------
+-- SOUNDS
+-----------------------------------------------------------------------------------------
+
+-- Background sound
+local backgroundSound = audio.loadSound( "Sounds/vehicle.mp3" )
+local backgroundSoundChannel = audio.play(backgroundSound,{channel=1,loops=-1})
+
+local buttonSound = audio.loadSound( "Sounds/buttonPressed.mp3")
+local buttonSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
-
-
--- set the background colour
-display.setDefault ("background", 132/255, 119/255, 254/255)
 
 -- Use Composer Library
 local composer = require( "composer" )
@@ -25,40 +33,38 @@ local widget = require( "widget" )
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "splash_screen"
+sceneName = "level_select"
 
 -----------------------------------------------------------------------------------------
 
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
 
-
-
------------------------------------------------------------------------------------------
--- SOUNDS
------------------------------------------------------------------------------------------
-
--- Background sound
-local backgroundSound = audio.loadSound( "Sounds/background.mp3" )
-local backgroundSoundChannel = audio.play(backgroundSound)
-
-
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
-local companyLogo
+local bkg_image
+
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
-local function goToSplash_Screen2 ()
-    composer.gotoScene( "splash_screen2" )
-end
-  
 
+-- Creating Transition to Level1 Screen
+local function Level1ScreenTransition( )
+    composer.gotoScene( "level1_screen", {effect = "slideDown", time = 1000})
+end    
 
--- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 
+-- Creating Transition to Level1 Screen
+local function Level2ScreenTransition( )
+    composer.gotoScene( "level2_screen", {effect = "slideDown", time = 1000})
+end    
+
+-- Creating Transition to Level1 Screen
+local function Level3ScreenTransition( )
+    composer.gotoScene( "level3_screen", {effect = "slideDown", time = 1000})
+end    
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
@@ -73,35 +79,78 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
     -- BACKGROUND IMAGE & STATIC OBJECTS
     -----------------------------------------------------------------------------------------
-    companyLogo = display.newImageRect("Images/CompanyLogoNadia.png", 150, 150)
-    -- set the company logo X
-    companyLogo.x = 500
-    -- set the company logo Y
-    companyLogo.y = 500
 
-    -- Associating button widgets with this scen
-    sceneGroup:insert( companyLogo )
-    
+    display.setDefault("background", 124/255, 249/255, 250/255)
+
+    -----------------------------------------------------------------------------------------
+    -- BUTTON WIDGETS
+    -----------------------------------------------------------------------------------------   
+
+    -- Creating Play Button
+    lvl2Button = widget.newButton( 
+        {   
+            -- Set its position on the screen relative to the screen size
+            x = 512,
+            y = display.contentHeight/2,
+            width = 185,
+            height = 185,
+
+            -- Insert the images here
+            defaultFile = "Images/Level2Pressed.png",
+            overFile = "Images/Level2Pressed.png",
+  
+            -- When the button is released, call the Level1 screen transition function
+            onRelease = Level2ScreenTransition  
+        } )
+
+    -----------------------------------------------------------------------------------------
+
+    -- Creating Credits Button
+    lvl3Button = widget.newButton( 
+        {
+            -- Set its position on the screen relative to the screen size
+            x = 748,
+            y = display.contentHeight/2,
+            width = 185,
+            height = 185,
+
+            -- Insert the images here
+            defaultFile = "Images/Level3Pressed.png",
+            overFile = "Images/Level3Pressed.png",
+
+            -- When the button is released, call the Credits transition function
+            onRelease = Level3ScreenTransition
+            
+        } ) 
+    -----------------------------------------------------------------------------------------
+
+    -- Creating Instructions Button
+    lvl1Button = widget.newButton( 
+        {   
+            -- Set its position on the screen relative to the screen size
+            x = 276,
+            y = display.contentHeight/2,
+            width = 185,
+            height = 185,
+
+            -- Insert the images here
+            defaultFile = "Images/Level1Pressed.png",
+            overFile = "Images/Level1Pressed.png",
+
+            -- When the button is released, call the Level1 screen transition function
+            onRelease = Level2ScreenTransition          
+        } )
 
 
+    -----------------------------------------------------------------------------------------
+
+    -- Associating button widgets with this scene
+    sceneGroup:insert( lvl1Button )
+    sceneGroup:insert( lvl2Button )
+    sceneGroup:insert( lvl3Button )
 end -- function scene:create( event )   
 
-
-local function ScaleLogo()
-    companyLogo:scale(1.01, 1.01)
-   
-    -- Call the scaleCompanyLogo function as soon as we enter the frame.
-    
-end
-
-local function GrowCompanyLogo()
-    
-    transition.to(companyLogo, {x=500, y=500, time=3000})
-
-end
-
-
-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
 
 -- The function called when the scene is issued to appear on screen
 function scene:show( event )
@@ -119,21 +168,14 @@ function scene:show( event )
     if ( phase == "will" ) then
        
     -----------------------------------------------------------------------------------------
-    
-    --backgroundSoundChannel = audio.play(backgroundSound {channel=3, loops=-1})
-    backgroundSoundChannel = audio.play(backgroundSound)
-
 
     -- Called when the scene is now on screen.
     -- Insert code here to make the scene come alive.
     -- Example: start timers, begin animation, play audio, etc.
-    elseif ( phase == "did" ) then      
+    audio.play(baqckgroundSoundChannel)
+    elseif ( phase == "did" ) then       
+        
 
-        Runtime:addEventListener("enterFrame", ScaleLogo) 
-
-        transition.to(companyLogo, {rotation=360, time=3000, onComplete=spinImage})
-
-        timer.performWithDelay( 3000, goToSplash_Screen2 )
     end
 
 end -- function scene:show( event )
@@ -156,13 +198,13 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
+        --audio.stop(backgroundSoundChannel)
+
 
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
-        -- stop the background sounds channel for this screen
-        audio.stop(backgroundSoundChannel)
     end
 
 end 

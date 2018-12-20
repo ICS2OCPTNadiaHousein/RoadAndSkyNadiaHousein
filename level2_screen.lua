@@ -12,7 +12,7 @@
 -- SOUNDS
 -----------------------------------------------------------------------------------------
 -- Background sound
-local backgroundSound = audio.loadStream( "Sounds/background2.mp3" )
+local backgroundSound = audio.loadSound( "Sounds/background2.mp3" )
 local backgroundSoundChannel
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
@@ -30,10 +30,14 @@ local physics = require("physics")
 -- Naming Scene
 sceneName = "level1_screen"
 
------------------------------------------------------------------------------------------
-
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
+
+-----------------------------------------------------------------------------------------
+-- GLOBAL VARIABLES
+-----------------------------------------------------------------------------------------
+
+numLives = 3
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -44,11 +48,11 @@ local bkg_image
 
 local character
 
- heart1 = nil
- heart2 = nil
- heart3 = nil
- numLives = 4
- answered = 0
+local heart1
+local heart2
+local heart3
+ 
+local answered = 0
 
 local rArrow
 local lArrow
@@ -57,8 +61,7 @@ local dArrow
 
 local motionx = 0
 local SPEED = 8
-local LINEAR_VELOCITY = -255
-local LINEAR_VELOCITY2 = 255
+local motiony = 0
 local GRAVITY = 0
 
 local motionxBall1 
@@ -83,32 +86,29 @@ local theBall
 -- When right arrow is touched, move character right
 local function right (touch)
     motionx = SPEED
-    character.xScale = -1
+    character.xScale = 1
 end
 
 -- When left arrow is touched, move character left
 local function left (touch)
     motionx = -SPEED
-    character.xScale = 1
+    character.xScale = -1
 end
 
 -- When up arrow is touched, add vertical so it can jump
 local function up (touch)
-    if (character ~= nil) then
-        character:setLinearVelocity( 0, LINEAR_VELOCITY )
-    end
+    motiony = -SPEED
 end
 
 -- When up arrow is touched, add vertical so it can jump
 local function down (touch)
-    if (character ~= nil) then
-        character:setLinearVelocity( 0, LINEAR_VELOCITY2 )
-    end
+    motiony = SPEED
 end
 
 -- Move character horizontally
 local function movePlayer (event)
     character.x = character.x + motionx
+    character.y = character.y + motiony
 end
 
 local function resetObstacles()
@@ -116,9 +116,6 @@ local function resetObstacles()
     motionxBall1 = math.random(7, 10)
     motionxBall2 = math.random(7, 10)
     motionxBall3 = math.random(7, 10)
-
-    LINEAR_VELOCITY = -255
-    LINEAR_VELOCITY2 = 255
 
     obstacle1.x = display.contentWidth
     obstacle2.x = display.contentWidth
@@ -177,12 +174,12 @@ end
 
 
 local function ReplaceCharacter()
-    character = display.newImageRect("Images/SkyDragon.png", 100, 150)
+    character = display.newImageRect("Images/LavaCar.png", 100, 150)
     character.x = display.contentWidth * 0.5 / 8
     character.y = display.contentHeight  * 0.1 / 3
     character.width = 195
     character.height = 150
-    character.myName = "SkyDragon"
+    character.myName = "LavaCar"
 
     -- intialize horizontal movement of character
     motionx = 0
@@ -229,16 +226,18 @@ local function onCollision( self, event )
     --print( event.target.myName .. ": collision began with " .. event.other.myName )
 
     if ( event.phase == "began" ) then
-        if  (event.target.myName == "obstacle1") and (event.other.myName == "SkyDragon") or
-            (event.target.myName == "obstacle2") and (event.other.myName == "SkyDragon") or
-            (event.target.myName == "obstacle3") and (event.other.myName == "SkyDragon") then
+        if  (event.target.myName == "obstacle1") and (event.other.myName == "LavaCar") or
+            (event.target.myName == "obstacle2") and (event.other.myName == "LavaCar") or
+            (event.target.myName == "obstacle3") and (event.other.myName == "LavaCar") then
 
             -- get the ball that the user hit
             theBall = event.target
 
+            print ("***Collided with obstacle")
+
             -- stop the character from moving
-            character.y = character.y
             motionx = 0
+            motiony = 0
             motionxBall1 = 0
             motionxBall2 = 0
             motionxBall3 = 0
@@ -251,8 +250,6 @@ local function onCollision( self, event )
 
             -- show overlay with math question
             composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
-
-            -- Increment questions answered
 
             
         end
@@ -295,17 +292,44 @@ local function RemovePhysicsBodies()
     physics.removeBody(floor)
 end
 
+
+local function UpdateHearts()
+
+    print ("***numLives = " .. numLives)
+    if (numLives == 3) then
+        -- update hearts
+        heart1.isVisible = true
+        heart2.isVisible = true
+        heart3.isVisible = true
+    elseif (numLives == 2) then
+        heart1.isVisible = false
+        heart2.isVisible = true
+        heart3.isVisible = true
+ 
+    elseif (numLives == 1) then              
+        -- update hearts
+        heart1.isVisible = false
+        heart2.isVisible = false
+        heart3.isVisible = true
+    elseif (numLives == 0) then
+        heart1.isVisible = false
+        heart2.isVisible = false
+        heart3.isVisible = false
+        timer.performWithDelay(200, YouLoseTransition)
+     end
+end
+
 -----------------------------------------------------------------------------------------
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeGame()
+function ResumeLevel1()
 
     -- make character visible again
     character.isVisible = true
-    
 
     resetObstacles()
+    UpdateHearts()
 
     if (answered == 3) then
         YouWinTransition()
@@ -416,7 +440,7 @@ function scene:create( event )
     sceneGroup:insert( floor )
 
     --obstacle1
-    obstacle1 = display.newImageRect ("Images/fireball.png", 70, 70)
+    obstacle1 = display.newImageRect ("Images/HotAirBalloon.png", 70, 70)
     obstacle1.x = 2148
     obstacle1.y = 480
     obstacle1.myName = "obstacle1"
@@ -425,7 +449,7 @@ function scene:create( event )
     sceneGroup:insert( obstacle1 )
 
     --obstacle2
-    obstacle2 = display.newImageRect ("Images/fireball.png", 70, 70)
+    obstacle2 = display.newImageRect ("Images/HotAirBalloon.png", 70, 70)
     obstacle2.x = 2148
     obstacle2.y = 170
     obstacle2.myName = "obstacle2"
@@ -434,7 +458,7 @@ function scene:create( event )
     sceneGroup:insert( obstacle2 )
 
     --obstacle3
-    obstacle3 = display.newImageRect ("Images/fireball.png", 70, 70)
+    obstacle3 = display.newImageRect ("Images/HotAirBalloon.png", 70, 70)
     obstacle3.x = 2148
     obstacle3.y = 700
     obstacle3.myName = "obstacle3"
@@ -471,6 +495,9 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
         backgroundSoundChannel = audio.play(backgroundSound, { channel=1, loops=-1})
+
+        -- set the number of lives
+        numLives = 3
 
         -- make all soccer balls visible
         MakeSoccerBallsVisible()

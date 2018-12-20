@@ -12,7 +12,7 @@
 -- SOUNDS
 -----------------------------------------------------------------------------------------
 -- Background sound
-local backgroundSound = audio.loadStream( "Sounds/background2.mp3" )
+local backgroundSound = audio.loadSound( "Sounds/background2.mp3" )
 local backgroundSoundChannel
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
@@ -30,10 +30,14 @@ local physics = require("physics")
 -- Naming Scene
 sceneName = "level1_screen"
 
------------------------------------------------------------------------------------------
-
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
+
+-----------------------------------------------------------------------------------------
+-- GLOBAL VARIABLES
+-----------------------------------------------------------------------------------------
+
+numLives = 3
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -44,11 +48,11 @@ local bkg_image
 
 local character
 
- heart1 = nil
- heart2 = nil
- heart3 = nil
- numLives = 4
- answered = 0
+local heart1
+local heart2
+local heart3
+ 
+local answered = 0
 
 local rArrow
 local lArrow
@@ -57,14 +61,13 @@ local dArrow
 
 local motionx = 0
 local SPEED = 8
-local LINEAR_VELOCITY = -255
-local LINEAR_VELOCITY2 = 255
+local motiony = 0
 local GRAVITY = 0
 
 local motionxBall1 
 local motionxBall2
 local motionxBall3
-local motionxBall = 10
+local motionxBall = 4
 
 local leftW
 local rightW
@@ -94,31 +97,25 @@ end
 
 -- When up arrow is touched, add vertical so it can jump
 local function up (touch)
-    if (character ~= nil) then
-        character:setLinearVelocity( 0, LINEAR_VELOCITY )
-    end
+    motiony = -SPEED
 end
 
 -- When up arrow is touched, add vertical so it can jump
 local function down (touch)
-    if (character ~= nil) then
-        character:setLinearVelocity( 0, LINEAR_VELOCITY2 )
-    end
+    motiony = SPEED
 end
 
 -- Move character horizontally
 local function movePlayer (event)
     character.x = character.x + motionx
+    character.y = character.y + motiony
 end
 
 local function resetObstacles()
-    motionxBall = 10
+    motionxBall = 6
     motionxBall1 = math.random(7, 10)
     motionxBall2 = math.random(7, 10)
     motionxBall3 = math.random(7, 10)
-
-    LINEAR_VELOCITY = -255
-    LINEAR_VELOCITY2 = 255
 
     obstacle1.x = display.contentWidth
     obstacle2.x = display.contentWidth
@@ -217,7 +214,7 @@ function YouLoseTransition()
 end
 
 function YouWinTransition()
-    composer.gotoScene( "you_win" )
+    composer.gotoScene( "level2_screen" )
 end
 
 local function onCollision( self, event )
@@ -236,9 +233,11 @@ local function onCollision( self, event )
             -- get the ball that the user hit
             theBall = event.target
 
+            print ("***Collided with obstacle")
+
             -- stop the character from moving
-            character.y = character.y
             motionx = 0
+            motiony = 0
             motionxBall1 = 0
             motionxBall2 = 0
             motionxBall3 = 0
@@ -253,8 +252,6 @@ local function onCollision( self, event )
 
             -- show overlay with math question
             composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
-
-            -- Increment questions answered
 
             
         end
@@ -297,17 +294,44 @@ local function RemovePhysicsBodies()
     physics.removeBody(floor)
 end
 
+
+local function UpdateHearts()
+
+    print ("***numLives = " .. numLives)
+    if (numLives == 3) then
+        -- update hearts
+        heart1.isVisible = true
+        heart2.isVisible = true
+        heart3.isVisible = true
+    elseif (numLives == 2) then
+        heart1.isVisible = false
+        heart2.isVisible = true
+        heart3.isVisible = true
+ 
+    elseif (numLives == 1) then              
+        -- update hearts
+        heart1.isVisible = false
+        heart2.isVisible = false
+        heart3.isVisible = true
+    elseif (numLives == 0) then
+        heart1.isVisible = false
+        heart2.isVisible = false
+        heart3.isVisible = false
+        timer.performWithDelay(200, YouLoseTransition)
+     end
+end
+
 -----------------------------------------------------------------------------------------
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeGame()
+function ResumeLevel1()
 
     -- make character visible again
     character.isVisible = true
-    
 
     resetObstacles()
+    UpdateHearts()
 
     if (answered == 3) then
         YouWinTransition()
@@ -473,6 +497,9 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
         backgroundSoundChannel = audio.play(backgroundSound, { channel=1, loops=-1})
+
+        -- set the number of lives
+        numLives = 3
 
         -- make all soccer balls visible
         MakeSoccerBallsVisible()
