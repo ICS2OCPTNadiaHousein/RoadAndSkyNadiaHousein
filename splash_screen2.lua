@@ -38,10 +38,6 @@ local scene = composer.newScene( sceneName )
 local woosh = audio.loadStream("Sounds/CompanyLogoSound.mp3")
 local wooshChannel
 
--- Background sound
-local backgroundSound = audio.loadSound( "Sounds/background.mp3" )
-local backgroundSoundChannel = audio.play(backgroundSound)
-
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -99,15 +95,9 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
     
     -- Displays the company logo
-    companyLogo = display.newImageRect("Images/CompanyLogoHouseinS@2x.png", 1024, 769)
+    companyLogo = display.newImageRect("Images/CompanyLogoHousein.png", 1024, 769)
     companyLogo.x = display.contentCenterX
     companyLogo.y = -display.contentHeight*1.1
-
-    companyLogo = display.newImageRect("Images/CompanyLogoNadia.png", 150, 150)
-    -- set the company logo X
-    companyLogo.x = 500
-    -- set the company logo Y
-    companyLogo.y = 500
 
     -- Associating button widgets with this scen
     sceneGroup:insert( companyLogo )
@@ -135,9 +125,6 @@ function scene:show( event )
     if ( phase == "will" ) then
        
     -----------------------------------------------------------------------------------------
-    
-    --backgroundSoundChannel = audio.play(backgroundSound {channel=3, loops=-1})
-    backgroundSoundChannel = audio.play(backgroundSound)
 
     -- Called when the scene is now on screen.
     -- Insert code here to make the scene come alive.

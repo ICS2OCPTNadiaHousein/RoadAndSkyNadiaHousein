@@ -241,6 +241,8 @@ local function onCollision( self, event )
             motionxBall1 = 0
             motionxBall2 = 0
             motionxBall3 = 0
+            LINEAR_VELOCITY = 0
+            LINEAR_VELOCITY2 = 0
 
             -- add 1 to answered variable
             answered = answered + 1

@@ -13,6 +13,7 @@
 
 -- Background sound
 local backgroundSound = audio.loadSound( "Sounds/vehicle.mp3" )
+local backgroundSoundChannel
 local backgroundSoundChannel = audio.play(backgroundSound,{channel=1,loops=-1})
 
 local buttonSound = audio.loadSound( "Sounds/buttonPressed.mp3")
@@ -66,8 +67,8 @@ end
 -----------------------------------------------------------------------------------------
 
 -- Creating Transition to Level1 Screen
-local function Level1ScreenTransition( )
-    composer.gotoScene( "level1_screen", {effect = "slideDown", time = 1000})
+local function Level1Select( )
+    composer.gotoScene( "level_select", {effect = "slideDown", time = 1000})
 end    
 
 
@@ -143,7 +144,7 @@ function scene:create( event )
             overFile = "Images/PlayButtonPressed@2x.png",
   
             -- When the button is released, call the Level1 screen transition function
-            onRelease = Level1ScreenTransition  
+            onRelease = Level1Select
         } )
 
     -----------------------------------------------------------------------------------------
@@ -229,6 +230,11 @@ function scene:show( event )
 
     -- Called when the scene is still off screen (but is about to come on screen).   
     if ( phase == "will" ) then
+
+    function BackgroundMusic()
+        backgroundSoundChannel = audio.play(backgroundSound)
+        timer.peformWithDelay(BackgroundMusic, 8307)
+    end
        
     -----------------------------------------------------------------------------------------
 
