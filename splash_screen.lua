@@ -21,7 +21,7 @@ local widget = require( "widget" )
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "splash_screen2"
+sceneName = "splash_screen"
 
 -----------------------------------------------------------------------------------------
 
@@ -35,7 +35,7 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 -- Creates "woosh" Sound
-local woosh = audio.loadStream("Sounds/CompanyLogoSound.mp3")
+local woosh = audio.loadSound("Sounds/CompanyLogoSound.mp3")
 local wooshChannel
 
 -- Background sound
@@ -103,11 +103,11 @@ function scene:create( event )
     companyLogo.x = display.contentCenterX
     companyLogo.y = -display.contentHeight*1.1
 
-    companyLogo = display.newImageRect("Images/CompanyLogoNadia.png", 150, 150)
+    companyLogo = display.newImageRect("Images/CompanyLogoHouseinS@2x.png", 1024, 769)
     -- set the company logo X
-    companyLogo.x = 500
+    companyLogo.x = display.contentCenterX
     -- set the company logo Y
-    companyLogo.y = 500
+    companyLogo.y = -display.contentHeight*1.1
 
     -- Associating button widgets with this scen
     sceneGroup:insert( companyLogo )
