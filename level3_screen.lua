@@ -28,7 +28,7 @@ local physics = require("physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level2_screen"
+sceneName = "level3_screen"
 
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
