@@ -69,7 +69,7 @@ function scene:create( event )
         {   
             -- Set its position on the screen relative to the screen size
             x = 512,
-            y = display.contentHeight/2,
+            y = 660,
             width = 185,
             height = 185,
 
@@ -137,7 +137,7 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-        backgroundSoundChannel = audio.stop(backgroundSound)
+        backgroundSoundChannel = audio.stop(backgroundSoundChannel)
 
     -----------------------------------------------------------------------------------------
 
