@@ -32,20 +32,24 @@ sceneName = "you_lose"
 
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
+-----------------------------------------------------------------------------------------
+-- LOCAL FUNCTIONS
+-----------------------------------------------------------------------------------------
 
+-- Creating Transition to Level1 Screen
+local function MenuTransition( )
+    composer.gotoScene( "main_menu", {effect = "slideDown", time = 1000})
+end  
 -----------------------------------------------------------------------------------------
 -- FORWARD REFERENCES
 -----------------------------------------------------------------------------------------
 
 -- local variables for the scene
 local bkg
+local mainMenuButton
 local loseSound = audio.loadSound("Sounds/BoingSoundEffect.mp3")
 local loseSoundChannel = audio.play(loseSound)
 ----------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------
--- LOCAL FUNCTIONS
------------------------------------------------------------------------------------------
-
 --------------------------------------------------------------------------------------
 -- The function called when the screen doesn't exist
 function scene:create( event )
@@ -59,9 +63,27 @@ function scene:create( event )
     bkg.y = display.contentCenterY
     bkg.width = display.contentWidth
     bkg.height = display.contentHeight
-   
+
+
+    mainMenuButton = widget.newButton( 
+        {   
+            -- Set its position on the screen relative to the screen size
+            x = 512,
+            y = display.contentHeight/2,
+            width = 185,
+            height = 185,
+
+            -- Insert the images here
+            defaultFile = "Images/MainMenuButton.png",
+            overFile = "Images/MainMenuButton.png",
+  
+            -- When the button is released, call the Level1 screen transition function
+            onRelease = MenuTransition  
+        } )
+    
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg )
+    sceneGroup:insert( mainMenuButton )
   
 end    
 

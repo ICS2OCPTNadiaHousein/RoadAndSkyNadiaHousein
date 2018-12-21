@@ -57,6 +57,8 @@ local X2 = display.contentWidth*4/7
 local Y1 = display.contentHeight*1/2
 local Y2 = display.contentHeight*5.5/7
 
+answered = 0
+
 local userAnswer
 
 -----------------------------------------------------------------------------------------
