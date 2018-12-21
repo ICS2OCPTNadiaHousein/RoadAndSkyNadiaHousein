@@ -1,9 +1,9 @@
 -----------------------------------------------------------------------------------------
 --
--- level2_screen.lua
--- Created by: Nadia
+-- level1_screen.lua
+-- Created by: Housein
 -- Date: 6,12,2018
--- Description: This is the level 2 screen of the game.
+-- Description: This is the level 1 screen of the game.
 -----------------------------------------------------------------------------------------
 
 
@@ -38,6 +38,8 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 numLives = 3
+answered = 0
+motionxBall = 6
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -51,8 +53,6 @@ local character
 local heart1
 local heart2
 local heart3
- 
-local answered = 0
 
 local rArrow
 local lArrow
@@ -60,7 +60,7 @@ local uArrow
 local dArrow
 
 local motionx = 0
-local SPEED = 8
+local SPEED = 5
 local motiony = 0
 local GRAVITY = 0
 
@@ -86,13 +86,13 @@ local theBall
 -- When right arrow is touched, move character right
 local function right (touch)
     motionx = SPEED
-    character.xScale = 1
+    character.xScale = -1
 end
 
 -- When left arrow is touched, move character left
 local function left (touch)
     motionx = -SPEED
-    character.xScale = -1
+    character.xScale = 1
 end
 
 -- When up arrow is touched, add vertical so it can jump
@@ -107,12 +107,14 @@ end
 
 -- Move character horizontally
 local function movePlayer (event)
-    character.x = character.x + motionx
-    character.y = character.y + motiony
+    
+        character.x = character.x + motionx
+        character.y = character.y + motiony
+    
 end
 
 local function resetObstacles()
-    motionxBall = 6
+    
     motionxBall1 = math.random(7, 10)
     motionxBall2 = math.random(7, 10)
     motionxBall3 = math.random(7, 10)
@@ -142,6 +144,7 @@ end
 local function stop (event)
     if (event.phase =="ended") then
         motionx = 0
+        motiony = 0
     end
 end
 
@@ -174,12 +177,12 @@ end
 
 
 local function ReplaceCharacter()
-    character = display.newImageRect("Images/LavaCar.png", 100, 150)
+    character = display.newImageRect("Images/SkyDragon.png", 100, 150)
     character.x = display.contentWidth * 0.5 / 8
     character.y = display.contentHeight  * 0.1 / 3
     character.width = 195
     character.height = 150
-    character.myName = "LavaCar"
+    character.myName = "SkyDragon"
 
     -- intialize horizontal movement of character
     motionx = 0
@@ -226,9 +229,9 @@ local function onCollision( self, event )
     --print( event.target.myName .. ": collision began with " .. event.other.myName )
 
     if ( event.phase == "began" ) then
-        if  (event.target.myName == "obstacle1") and (event.other.myName == "LavaCar") or
-            (event.target.myName == "obstacle2") and (event.other.myName == "LavaCar") or
-            (event.target.myName == "obstacle3") and (event.other.myName == "LavaCar") then
+        if  (event.target.myName == "obstacle1") and (event.other.myName == "SkyDragon") or
+            (event.target.myName == "obstacle2") and (event.other.myName == "SkyDragon") or
+            (event.target.myName == "obstacle3") and (event.other.myName == "SkyDragon") then
 
             -- get the ball that the user hit
             theBall = event.target
@@ -241,9 +244,10 @@ local function onCollision( self, event )
             motionxBall1 = 0
             motionxBall2 = 0
             motionxBall3 = 0
+            LINEAR_VELOCITY = 0
+            LINEAR_VELOCITY2 = 0
 
-            -- add 1 to answered variable
-            answered = answered + 1
+
 
             -- make the character invisible
             character.isVisible = false
@@ -305,9 +309,7 @@ local function UpdateHearts()
         heart1.isVisible = false
         heart2.isVisible = true
         heart3.isVisible = true
- 
     elseif (numLives == 1) then              
-        -- update hearts
         heart1.isVisible = false
         heart2.isVisible = false
         heart3.isVisible = true
@@ -440,7 +442,7 @@ function scene:create( event )
     sceneGroup:insert( floor )
 
     --obstacle1
-    obstacle1 = display.newImageRect ("Images/HotAirBalloon.png", 70, 70)
+    obstacle1 = display.newImageRect ("Images/fireball.png", 70, 70)
     obstacle1.x = 2148
     obstacle1.y = 480
     obstacle1.myName = "obstacle1"
@@ -449,7 +451,7 @@ function scene:create( event )
     sceneGroup:insert( obstacle1 )
 
     --obstacle2
-    obstacle2 = display.newImageRect ("Images/HotAirBalloon.png", 70, 70)
+    obstacle2 = display.newImageRect ("Images/fireball.png", 70, 70)
     obstacle2.x = 2148
     obstacle2.y = 170
     obstacle2.myName = "obstacle2"
@@ -458,7 +460,7 @@ function scene:create( event )
     sceneGroup:insert( obstacle2 )
 
     --obstacle3
-    obstacle3 = display.newImageRect ("Images/HotAirBalloon.png", 70, 70)
+    obstacle3 = display.newImageRect ("Images/fireball.png", 70, 70)
     obstacle3.x = 2148
     obstacle3.y = 700
     obstacle3.myName = "obstacle3"
