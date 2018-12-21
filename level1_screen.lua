@@ -38,6 +38,8 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 numLives = 3
+answered = 0
+motionxBall = 6
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -51,8 +53,6 @@ local character
 local heart1
 local heart2
 local heart3
- 
- answered = 0
 
 local rArrow
 local lArrow
@@ -60,7 +60,7 @@ local uArrow
 local dArrow
 
 local motionx = 0
-local SPEED = 8
+local SPEED = 5
 local motiony = 0
 local GRAVITY = 0
 
@@ -107,12 +107,14 @@ end
 
 -- Move character horizontally
 local function movePlayer (event)
-    character.x = character.x + motionx
-    character.y = character.y + motiony
+    
+        character.x = character.x + motionx
+        character.y = character.y + motiony
+    
 end
 
 local function resetObstacles()
-    motionxBall = 6
+    
     motionxBall1 = math.random(7, 10)
     motionxBall2 = math.random(7, 10)
     motionxBall3 = math.random(7, 10)
@@ -142,6 +144,7 @@ end
 local function stop (event)
     if (event.phase =="ended") then
         motionx = 0
+        motiony = 0
     end
 end
 
