@@ -107,10 +107,9 @@ end
 
 -- Move character horizontally
 local function movePlayer (event)
-    
-        character.x = character.x + motionx
-        character.y = character.y + motiony
-    
+   
+    character.x = character.x + motionx
+    character.y = character.y  + motiony   
 end
 
 local function resetObstacles()
@@ -349,7 +348,7 @@ function scene:create( event )
     local sceneGroup = self.view
 
     -- Insert the background image
-    bkg_image = display.newImageRect("Images/Level2Screen.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImageRect("Images/Level3Screen.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentWidth / 2 
     bkg_image.y = display.contentHeight / 2
 
