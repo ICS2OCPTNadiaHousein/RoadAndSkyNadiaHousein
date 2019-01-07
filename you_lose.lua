@@ -40,6 +40,11 @@ local scene = composer.newScene( sceneName )
 local function MenuTransition( )
     composer.gotoScene( "main_menu", {effect = "slideDown", time = 1000})
 end  
+
+-- Creating Transition to Level1 Screen
+local function LevelSelectTransition( )
+    composer.gotoScene( "level_select", {effect = "slideDown", time = 1000})
+end  
 -----------------------------------------------------------------------------------------
 -- FORWARD REFERENCES
 -----------------------------------------------------------------------------------------
@@ -47,6 +52,7 @@ end
 -- local variables for the scene
 local bkg
 local mainMenuButton
+local backButton
 local loseSound = audio.loadSound("Sounds/BoingSoundEffect.mp3")
 local loseSoundChannel = audio.play(loseSound)
 ----------------------------------------------------------------------------------------
@@ -80,10 +86,28 @@ function scene:create( event )
             -- When the button is released, call the Level1 screen transition function
             onRelease = MenuTransition  
         } )
+
+
+    backButton = widget.newButton( 
+        {   
+            -- Set its position on the screen relative to the screen size
+            x = 512,
+            y = 660,
+            width = 185,
+            height = 185,
+
+            -- Insert the images here
+            defaultFile = "Images/Back Button Unpressed.png",
+            overFile = "Images/Back Button Pressed.png",
+  
+            -- When the button is released, call the Level1 screen transition function
+            onRelease = LevelSelectTransition  
+        } )
     
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg )
     sceneGroup:insert( mainMenuButton )
+    sceneGroup:insert( backButton )
   
 end    
 

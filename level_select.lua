@@ -66,6 +66,10 @@ local function Level3ScreenTransition( )
     composer.gotoScene( "level3_screen", {effect = "slideDown", time = 1000})
 end    
 
+local function BackButtonTransition( )
+    composer.gotoScene( "main_menu", {effect = "slideDown", time = 1000})
+end  
+
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -141,6 +145,21 @@ function scene:create( event )
             onRelease = Level1ScreenTransition          
         } )
 
+    backButton = widget.newButton( 
+        {   
+            -- Set its position on the screen relative to the screen size
+            x = 128,
+            y = 100,
+            width = 110,
+            height = 100,
+
+            -- Insert the images here
+            defaultFile = "Images/Back Button Unpressed.png",
+            overFile = "Images/Back Button Pressed.png",
+
+            -- When the button is released, call the Level1 screen transition function
+            onRelease = BackButtonTransition          
+        } )
 
     -----------------------------------------------------------------------------------------
 
@@ -148,6 +167,7 @@ function scene:create( event )
     sceneGroup:insert( lvl1Button )
     sceneGroup:insert( lvl2Button )
     sceneGroup:insert( lvl3Button )
+    sceneGroup:insert( backButton )
 end -- function scene:create( event )   
 
 -----------------------------------------------------------------------------------------
