@@ -38,15 +38,6 @@ character = nil
 -----------------------------------------------------------------------------------------
 
 -- The local variables for this scene
-local questionText
-
-local firstNumber
-local secondNumber
-
-local answer
-local wrongAnswer1
-local wrongAnswer2
-local wrongAnswer3
 
 local LavaCar 
 local SkyDragon
