@@ -48,8 +48,6 @@ motionxBall = 6
 -- The local variables for this scene
 local bkg_image
 
-local character
-
 local heart1
 local heart2
 local heart3
@@ -177,13 +175,13 @@ end
 
 
 local function ReplaceCharacter()
-    character = display.newImageRect("Images/SkyDragon.png", 100, 150)
+   --[[ character = display.newImageRect("Images/SkyDragon.png", 100, 150)
     character.x = display.contentWidth * 0.5 / 8
     character.y = display.contentHeight  * 0.1 / 3
     character.width = 195
     character.height = 150
     character.myName = "SkyDragon"
-
+]]
     -- intialize horizontal movement of character
     motionx = 0
 
@@ -229,9 +227,9 @@ local function onCollision( self, event )
     --print( event.target.myName .. ": collision began with " .. event.other.myName )
 
     if ( event.phase == "began" ) then
-        if  (event.target.myName == "obstacle1") and (event.other.myName == "SkyDragon") or
-            (event.target.myName == "obstacle2") and (event.other.myName == "SkyDragon") or
-            (event.target.myName == "obstacle3") and (event.other.myName == "SkyDragon") then
+        if  (event.target.myName == "obstacle1") and (event.other.myName == "character") or
+            (event.target.myName == "obstacle2") and (event.other.myName == "character") or
+            (event.target.myName == "obstacle3") and (event.other.myName == "character")then
 
             -- get the ball that the user hit
             theBall = event.target
