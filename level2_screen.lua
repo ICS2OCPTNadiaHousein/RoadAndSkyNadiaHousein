@@ -303,7 +303,7 @@ local function UpdateHearts()
     if (numLives == 3) then
         -- update hearts
         heart1.isVisible = true
-        heart.isVisible = true
+        heart2.isVisible = true
         heart3.isVisible = true
     elseif (numLives == 2) then
         heart1.isVisible = false
