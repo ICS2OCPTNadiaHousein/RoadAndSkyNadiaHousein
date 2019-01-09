@@ -40,6 +40,8 @@ local scene = composer.newScene( sceneName )
 numLives = 3
 answered = 0
 motionxBall = 6
+character.isVisible = true
+
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES

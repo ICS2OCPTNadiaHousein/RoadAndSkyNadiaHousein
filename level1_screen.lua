@@ -40,6 +40,7 @@ local scene = composer.newScene( sceneName )
 numLives = 3
 answered = 0
 motionxBall = 6
+character.isVisible = true
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -187,7 +188,7 @@ local function ReplaceCharacter()
 
     -- add physics body
     physics.addBody( character, "dynamic", { density=0, friction=0.5, bounce=0, rotation=0 } )
-
+    
     -- prevent character from being able to tip over
     character.isFixedRotation = true
 

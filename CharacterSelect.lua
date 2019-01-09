@@ -68,10 +68,12 @@ local userAnswer
 -----------------------------------------------------------------------------------------
 
 --making transition to next scene
-local function BackToLevel1() 
+local function BackToLevelSelect() 
     composer.hideOverlay("crossFade", 400 )
 
-    composer.gotoScene( "level1_screen" )
+    character.isVisible = false
+
+    composer.gotoScene( "level_select" )
 end 
 
 -----------------------------------------------------------------------------------------
@@ -86,7 +88,7 @@ local function TouchListenerLavaCar(touch)
     character.height = 150
     character.myName = "character"
 
-        BackToLevel1( )
+        BackToLevelSelect( )
     
     end 
 end
@@ -103,7 +105,7 @@ local function TouchListenerLavaCar2(touch)
     character.height = 150
     character.myName = "character"
 
-        BackToLevel1( )
+        BackToLevelSelect( )
         
         
     end 
@@ -123,7 +125,7 @@ local function TouchListenerSkyCar(touch)
     character.height = 150
     character.myName = "character"
 
-        BackToLevel1( )
+        BackToLevelSelect( )
         
     end 
 end
@@ -141,7 +143,7 @@ local function TouchListenerSkyDragon3(touch)
     character.height = 150
     character.myName = "character"
 
-        BackToLevel1( )
+        BackToLevelSelect( )
         
     end 
 end
