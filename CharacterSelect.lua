@@ -50,12 +50,11 @@ local wrongAnswer3
 
 local LavaCar 
 local SkyDragon
-local SkyDragon2
+local SkyCar
 local SkyDragon3
 
 local answerPosition = 1
 local bkg
---local cover
 
 local X1 = display.contentWidth*2/7
 local X2 = display.contentWidth*4/7
@@ -88,6 +87,7 @@ local function TouchListenerLavaCar(touch)
     character.width = 195
     character.height = 150
     character.myName = "character"
+
         BackToLevel1( )
     
     end 
@@ -104,6 +104,7 @@ local function TouchListenerLavaCar2(touch)
     character.width = 195
     character.height = 150
     character.myName = "character"
+
         BackToLevel1( )
         
         
@@ -111,13 +112,13 @@ local function TouchListenerLavaCar2(touch)
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
-local function TouchListenerSkyDragon2(touch)
+local function TouchListenerSkyCar(touch)
     
     
    
     
     if (touch.phase == "ended") then
-    character = display.newImageRect("Images/SkyDragon.png", 100, 150)
+    character = display.newImageRect("Images/SkyCar.png", 100, 150)
     character.x = display.contentWidth * 0.5 / 8
     character.y = display.contentHeight  * 0.1 / 3
     character.width = 195
@@ -153,7 +154,7 @@ end
 local function AddTextListeners ( )
     LavaCar:addEventListener("touch", TouchListenerLavaCar)
     LavaCar2:addEventListener("touch", TouchListenerLavaCar2)
-    SkyDragon2:addEventListener("touch", TouchListenerSkyDragon2)
+    SkyCar:addEventListener("touch", TouchListenerSkyCar)
     SkyDragon3:addEventListener("touch", TouchListenerSkyDragon3)
 
 
@@ -163,7 +164,7 @@ end
 local function RemoveTextListeners()
     LavaCar:removeEventListener("touch", TouchListenerLavaCar)
     LavaCar2:removeEventListener("touch", TouchListenerLavaCar2)
-    SkyDragon2:removeEventListener("touch", TouchListenerSkyDragon2)
+    SkyCar:removeEventListener("touch", TouchListenerSkyCar)
     SkyDragon3:removeEventListener("touch", TouchListenerSkyDragon3)
 end
 
@@ -180,8 +181,8 @@ local function PositionAnswers()
         LavaCar2.x = X1
         LavaCar2.y = Y2
         
-        SkyDragon2.x = X2
-        SkyDragon2.y = Y1
+        SkyCar.x = X2
+        SkyCar.y = Y1
 
         SkyDragon3.x = X2
         SkyDragon3.y = Y2
@@ -195,8 +196,8 @@ local function PositionAnswers()
         LavaCar2.x = X1
         LavaCar2.y = Y2
             
-        SkyDragon2.x = X2
-        SkyDragon2.y = Y1
+        SkyCar.x = X2
+        SkyCar.y = Y1
 
         SkyDragon3.x = X2
         SkyDragon3.y = Y2
@@ -210,8 +211,8 @@ local function PositionAnswers()
         LavaCar2.x = X1
         LavaCar2.y = Y2
             
-        SkyDragon2.x = X2
-        SkyDragon2.y = Y1
+        SkyCar.x = X2
+        SkyCar.y = Y1
 
         SkyDragon3.x = X2
         SkyDragon3.y = Y2
@@ -224,8 +225,8 @@ local function PositionAnswers()
         LavaCar2.x = X1
         LavaCar2.y = Y2
             
-        SkyDragon2.x = X2
-        SkyDragon2.y = Y1
+        SkyCar.x = X2
+        SkyCar.y = Y1
 
         SkyDragon3.x = X2
         SkyDragon3.y = Y2
@@ -255,8 +256,8 @@ function scene:create( event )
     LavaCar.anchorX = 0
     LavaCar2 = display.newImageRect("Images/LavaCar.png", 300, 200)
     LavaCar2.anchorX = 0
-    SkyDragon2 = display.newImageRect("Images/SkyDragon.png", 300, 200)
-    SkyDragon2.anchorX = 0
+    SkyCar = display.newImageRect("Images/SkyCar.png", 300, 200)
+    SkyCar.anchorX = 0
     SkyDragon3 = display.newImageRect("Images/SkyDragon.png", 300, 200)
     SkyDragon3.anchorX = 0
 
@@ -266,7 +267,7 @@ function scene:create( event )
     sceneGroup:insert(bkg)
     sceneGroup:insert(LavaCar)
     sceneGroup:insert(LavaCar2)
-    sceneGroup:insert(SkyDragon2)
+    sceneGroup:insert(SkyCar)
     sceneGroup:insert(SkyDragon3)
 
 
