@@ -50,8 +50,6 @@ character.isVisible = true
 -- The local variables for this scene
 local bkg_image
 
-local character
-
 local heart1
 local heart2
 local heart3
@@ -179,13 +177,7 @@ end
 
 
 local function ReplaceCharacter()
-    character = display.newImageRect("Images/SkyDragon.png", 100, 150)
-    character.x = display.contentWidth * 0.5 / 8
-    character.y = display.contentHeight  * 0.1 / 3
-    character.width = 195
-    character.height = 150
-    character.myName = "SkyDragon"
-
+    
     -- intialize horizontal movement of character
     motionx = 0
 
