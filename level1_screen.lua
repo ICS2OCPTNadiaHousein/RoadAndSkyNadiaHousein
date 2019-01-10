@@ -210,7 +210,7 @@ function YouLoseTransition()
 end
 
 function YouWinTransition()
-    composer.gotoScene( "you_win" )
+    composer.gotoScene( "level2_screen" )
 end
 
 local function onCollision( self, event )
@@ -547,6 +547,7 @@ function scene:hide( event )
         RemoveArrowEventListeners()
         RemoveRuntimeListeners()
         display.remove(character)
+
     end
 
 end --function scene:hide( event )
