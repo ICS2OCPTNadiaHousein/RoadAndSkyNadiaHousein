@@ -70,7 +70,7 @@ end
 local function CharacterSelect( )
     composer.gotoScene( "CharacterSelect", {effect = "slideDown", time = 1000})
 end    
-
+ 
 
 -----------------------------------------------------------------------------------------
 

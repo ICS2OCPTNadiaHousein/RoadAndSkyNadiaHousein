@@ -210,7 +210,9 @@ function YouLoseTransition()
 end
 
 function YouWinTransition()
-    composer.gotoScene( "you_win" )
+    if (answered == 3) then
+        composer.gotoScene( "you_win" )
+    end
 end
 
 local function onCollision( self, event )
