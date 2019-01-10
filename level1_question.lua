@@ -77,10 +77,10 @@ end
 local function TouchListenerAnswer(touch)
     
     if (touch.phase == "ended") then
-         print ("**answered:TouchListenerAnswer = " .. answered)
+        print ("**answered:TouchListenerAnswer = " .. answered)
         answered = answered + 1
         BackToLevel1( )
-
+        ResumeLevel1()
     end 
 end
 
@@ -91,7 +91,9 @@ local function TouchListenerWrongAnswer(touch)
     if (touch.phase == "ended") then
         numLives = numLives - 1
         print ("***numLives:TouchListenerWrongAnswer = " .. numLives)
+        answered = answered + 1
         BackToLevel1( )
+        ResumeLevel1()
         
     end 
 end
@@ -105,8 +107,9 @@ local function TouchListenerWrongAnswer2(touch)
     if (touch.phase == "ended") then
         numLives = numLives - 1
         print ("***numLives:TouchListenerWrongAnswer2 = " .. numLives)
-
+        answered = answered + 1
         BackToLevel1( )
+        ResumeLevel1()
         
     end 
 end
@@ -119,8 +122,10 @@ local function TouchListenerWrongAnswer3(touch)
     if (touch.phase == "ended") then
         numLives = numLives - 1               
         print ("***numLives:TouchListenerWrongAnswer3 = " .. numLives)
-
+        answered = answered + 1
         BackToLevel1( )
+        ResumeLevel1()
+
         
     end 
 end
