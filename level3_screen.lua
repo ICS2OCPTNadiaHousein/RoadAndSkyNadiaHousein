@@ -224,9 +224,9 @@ local function onCollision( self, event )
     --print( event.target.myName .. ": collision began with " .. event.other.myName )
 
     if ( event.phase == "began" ) then
-        if  (event.target.myName == "obstacle1") and (event.other.myName == "SkyDragon") or
-            (event.target.myName == "obstacle2") and (event.other.myName == "SkyDragon") or
-            (event.target.myName == "obstacle3") and (event.other.myName == "SkyDragon") then
+        if  (event.target.myName == "obstacle1") and (event.other.myName == "character") or
+            (event.target.myName == "obstacle2") and (event.other.myName == "character") or
+            (event.target.myName == "obstacle3") and (event.other.myName == "character") then
 
             -- get the ball that the user hit
             theBall = event.target
