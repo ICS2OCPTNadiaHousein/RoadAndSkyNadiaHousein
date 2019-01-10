@@ -77,9 +77,10 @@ end
 local function TouchListenerAnswer(touch)
     
     if (touch.phase == "ended") then
-        BackToLevel1( )
+         print ("**answered:TouchListenerAnswer = " .. answered)
         answered = answered + 1
-    
+        BackToLevel1( )
+
     end 
 end
 
@@ -91,7 +92,6 @@ local function TouchListenerWrongAnswer(touch)
         numLives = numLives - 1
         print ("***numLives:TouchListenerWrongAnswer = " .. numLives)
         BackToLevel1( )
-        
         
     end 
 end
