@@ -78,6 +78,8 @@ local obstacle2
 local obstacle3
 local theBall
 
+answered = 0
+
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
 ----------------------------------------------------------------------------------------- 
@@ -210,7 +212,7 @@ function YouLoseTransition()
 end
 
 function YouWinTransition()
-    composer.gotoScene( "you_win" )
+    composer.gotoScene( "level2_screen" )
 end
 
 local function onCollision( self, event )
@@ -547,6 +549,7 @@ function scene:hide( event )
         RemoveArrowEventListeners()
         RemoveRuntimeListeners()
         display.remove(character)
+
     end
 
 end --function scene:hide( event )
