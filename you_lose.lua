@@ -86,29 +86,11 @@ function scene:create( event )
             -- When the button is released, call the Level1 screen transition function
             onRelease = MenuTransition  
         } )
-
-
-    backButton = widget.newButton( 
-        {   
-            -- Set its position on the screen relative to the screen size
-            x = 512,
-            y = 660,
-            width = 185,
-            height = 185,
-
-            -- Insert the images here
-            defaultFile = "Images/Back Button Unpressed.png",
-            overFile = "Images/Back Button Pressed.png",
-  
-            -- When the button is released, call the Level1 screen transition function
-            onRelease = LevelSelectTransition  
-        } )
     
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg )
     sceneGroup:insert( mainMenuButton )
-    sceneGroup:insert( backButton )
-  
+    
 end    
 
 -----------------------------------------------------------------------------------------

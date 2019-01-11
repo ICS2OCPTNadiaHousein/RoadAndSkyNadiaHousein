@@ -40,9 +40,9 @@ character = nil
 -- The local variables for this scene
 
 local LavaCar 
-local SkyDragon
+local LavaDragon
 local SkyCar
-local SkyDragon3
+local SkyDragon
 
 local answerPosition = 1
 local bkg
@@ -85,11 +85,11 @@ local function TouchListenerLavaCar(touch)
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
-local function TouchListenerLavaCar2(touch)
+local function TouchListenerLavaDragon(touch)
     
                  
     if (touch.phase == "ended") then
-    character = display.newImageRect("Images/LavaCar.png", 100, 150)
+    character = display.newImageRect("Images/LavaDragon.png", 100, 150)
     character.x = display.contentWidth * 0.5 / 8
     character.y = display.contentHeight  * 0.1 / 3
     character.width = 195
@@ -122,7 +122,7 @@ local function TouchListenerSkyCar(touch)
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
-local function TouchListenerSkyDragon3(touch)
+local function TouchListenerSkyDragon(touch)
    
     
 
@@ -144,9 +144,9 @@ end
 --adding the event listeners 
 local function AddTextListeners ( )
     LavaCar:addEventListener("touch", TouchListenerLavaCar)
-    LavaCar2:addEventListener("touch", TouchListenerLavaCar2)
+    LavaDragon:addEventListener("touch", TouchListenerLavaDragon)
     SkyCar:addEventListener("touch", TouchListenerSkyCar)
-    SkyDragon3:addEventListener("touch", TouchListenerSkyDragon3)
+    SkyDragon:addEventListener("touch", TouchListenerSkyDragon)
 
 
 end
@@ -154,75 +154,24 @@ end
 --removing the event listeners
 local function RemoveTextListeners()
     LavaCar:removeEventListener("touch", TouchListenerLavaCar)
-    LavaCar2:removeEventListener("touch", TouchListenerLavaCar2)
+    LavaDragon:removeEventListener("touch", TouchListenerLavaDragon)
     SkyCar:removeEventListener("touch", TouchListenerSkyCar)
-    SkyDragon3:removeEventListener("touch", TouchListenerSkyDragon3)
+    SkyDragon:removeEventListener("touch", TouchListenerSkyDragon)
 end
 
 local function PositionAnswers()
 
-    --creating random start position in a cretain area
-    answerPosition = math.random(1, 4)
-
-    if (answerPosition == 1) then
-
         LavaCar.x = X1
         LavaCar.y = Y1
         
-        LavaCar2.x = X1
-        LavaCar2.y = Y2
+        LavaDragon.x = X1
+        LavaDragon.y = Y2
         
         SkyCar.x = X2
         SkyCar.y = Y1
 
-        SkyDragon3.x = X2
-        SkyDragon3.y = Y2
-
-        
-    elseif (answerPosition == 2) then
-
-        LavaCar.x = X1
-        LavaCar.y = Y1
-            
-        LavaCar2.x = X1
-        LavaCar2.y = Y2
-            
-        SkyCar.x = X2
-        SkyCar.y = Y1
-
-        SkyDragon3.x = X2
-        SkyDragon3.y = Y2
-
-
-    elseif (answerPosition == 3) then
-
-        LavaCar.x = X1
-        LavaCar.y = Y1
-            
-        LavaCar2.x = X1
-        LavaCar2.y = Y2
-            
-        SkyCar.x = X2
-        SkyCar.y = Y1
-
-        SkyDragon3.x = X2
-        SkyDragon3.y = Y2
-
-    elseif (answerPosition == 4) then
-
-        LavaCar.x = X1
-        LavaCar.y = Y1
-            
-        LavaCar2.x = X1
-        LavaCar2.y = Y2
-            
-        SkyCar.x = X2
-        SkyCar.y = Y1
-
-        SkyDragon3.x = X2
-        SkyDragon3.y = Y2
-            
-    end
+        SkyDragon.x = X2
+        SkyDragon.y = Y2
 end
 
 -----------------------------------------------------------------------------------------
@@ -245,21 +194,21 @@ function scene:create( event )
     -- create the answer text object & wrong answer text objects
     LavaCar = display.newImageRect("Images/LavaCar.png", 300, 200)
     LavaCar.anchorX = 0
-    LavaCar2 = display.newImageRect("Images/LavaCar.png", 300, 200)
-    LavaCar2.anchorX = 0
+    LavaDragon = display.newImageRect("Images/LavaDragon.png", 300, 200)
+    LavaDragon.anchorX = 0
     SkyCar = display.newImageRect("Images/SkyCar.png", 300, 200)
     SkyCar.anchorX = 0
-    SkyDragon3 = display.newImageRect("Images/SkyDragon.png", 300, 200)
-    SkyDragon3.anchorX = 0
+    SkyDragon = display.newImageRect("Images/SkyDragon.png", 300, 200)
+    SkyDragon.anchorX = 0
 
     -----------------------------------------------------------------------------------------
 
     -- insert all objects for this scene into the scene group
     sceneGroup:insert(bkg)
     sceneGroup:insert(LavaCar)
-    sceneGroup:insert(LavaCar2)
+    sceneGroup:insert(LavaDragon)
     sceneGroup:insert(SkyCar)
-    sceneGroup:insert(SkyDragon3)
+    sceneGroup:insert(SkyDragon)
 
 
 end --function scene:create( event )
