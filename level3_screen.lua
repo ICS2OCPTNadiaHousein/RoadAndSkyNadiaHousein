@@ -495,6 +495,7 @@ function scene:show( event )
 
         -- set the number of lives
         numLives = 3
+        character.isVisible = true
 
         -- make all soccer balls visible
         MakeSoccerBallsVisible()
@@ -546,7 +547,8 @@ function scene:hide( event )
         Runtime:removeEventListener("enterFrame", moveObstacles)
         RemoveArrowEventListeners()
         RemoveRuntimeListeners()
-        display.remove(character)
+        --display.remove(character)
+        character.isVisible = false
     end
 
 end --function scene:hide( event )

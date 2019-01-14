@@ -548,7 +548,8 @@ function scene:hide( event )
         Runtime:removeEventListener("enterFrame", moveObstacles)
         RemoveArrowEventListeners()
         RemoveRuntimeListeners()
-        display.remove(character)
+        --display.remove(character)
+        character.isVisible = false
 
     end
 

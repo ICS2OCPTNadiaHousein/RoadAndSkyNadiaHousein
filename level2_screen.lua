@@ -40,7 +40,7 @@ local scene = composer.newScene( sceneName )
 numLives = 3
 answered = 0
 motionxBall = 6
-character.isVisible = true
+
 
 
 -----------------------------------------------------------------------------------------
@@ -79,6 +79,7 @@ local obstacle2
 local obstacle3
 local theBall
 
+
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
 ----------------------------------------------------------------------------------------- 
@@ -109,8 +110,7 @@ end
 local function movePlayer (event)
     
         character.x = character.x + motionx
-        character.y = character.y + motiony
-    
+        character.y = character.y + motiony   
 end
 
 local function resetObstacles()
@@ -494,6 +494,7 @@ function scene:show( event )
 
         -- set the number of lives
         numLives = 3
+        character.isVisible = true
 
         -- make all soccer balls visible
         MakeSoccerBallsVisible()
@@ -545,7 +546,7 @@ function scene:hide( event )
         Runtime:removeEventListener("enterFrame", moveObstacles)
         RemoveArrowEventListeners()
         RemoveRuntimeListeners()
-        display.remove(character)
+        character.isVisible = false
     end
 
 end --function scene:hide( event )
