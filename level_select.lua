@@ -45,6 +45,7 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 local bkg_image
+local textObject
 
 
 -----------------------------------------------------------------------------------------
@@ -85,6 +86,13 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     display.setDefault("background", 124/255, 249/255, 250/255)
+
+    -----------------------------------------------------------------------------------------
+    -- TEXT
+    -----------------------------------------------------------------------------------------
+    textObject = display.newText( "Level Select", 500, 100, nil, 100)
+    -- sets the color of the text
+    textObject:setTextColor(75/255, 55/255, 40/255)
 
     -----------------------------------------------------------------------------------------
     -- BUTTON WIDGETS
@@ -168,6 +176,7 @@ function scene:create( event )
     sceneGroup:insert( lvl2Button )
     sceneGroup:insert( lvl3Button )
     sceneGroup:insert( backButton )
+    sceneGroup:insert( textObject )
 end -- function scene:create( event )   
 
 -----------------------------------------------------------------------------------------
