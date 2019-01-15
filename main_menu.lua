@@ -51,6 +51,8 @@ local creditsButton
 local instructionsButton
 local muteButton
 
+local mutePressed
+local muteUnpressed
 local textObject
 local soundOn = true
 
@@ -112,8 +114,13 @@ function scene:create( event )
     bkg_image.width = display.contentWidth
     bkg_image.height = display.contentHeight
 
+    mutePressed = display.newImageRect("Images/mutePressed.png", 80, 80)
+    mutePressed.x = 260
+    mutePressed.y = 384
+
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg_image )
+    sceneGroup:insert( mutePressed )
 
     -----------------------------------------------------------------------------------------
     -- TEXT
@@ -189,8 +196,8 @@ function scene:create( event )
     muteButton = widget.newButton( 
         {   
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth/1/8,
-            y = display.contentHeight*2/4,
+            x = display.contentWidth/8,
+            y = display.contentHeight/2,
             width = 80,
             height = 80,
 
