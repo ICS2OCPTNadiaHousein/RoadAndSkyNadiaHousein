@@ -48,8 +48,8 @@ local bkg_image
 local playButton
 local creditsButton
 local instructionsButton
-
 local muteButton
+
 local textObject
 local soundOn = true
 
@@ -111,10 +111,8 @@ function scene:create( event )
     bkg_image.width = display.contentWidth
     bkg_image.height = display.contentHeight
 
-
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg_image )
-
 
     -----------------------------------------------------------------------------------------
     -- TEXT
