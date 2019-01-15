@@ -46,11 +46,7 @@ local SkyDragon
 
 local answerPosition = 1
 local bkg
-
-local X1 = display.contentWidth*2/7
-local X2 = display.contentWidth*4/7
-local Y1 = display.contentHeight*1/2
-local Y2 = display.contentHeight*5.5/7
+local textObject
 
 local userAnswer
 
@@ -67,7 +63,10 @@ local function BackToLevelSelect()
     composer.gotoScene( "level_select" )
 end 
 
------------------------------------------------------------------------------------------
+local function BackButtonTransition( )
+    composer.gotoScene( "main_menu", {effect = "slideDown", time = 1000})
+end  
+
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerLavaCar(touch)
     
@@ -161,17 +160,17 @@ end
 
 local function PositionAnswers()
 
-        LavaCar.x = X1
-        LavaCar.y = Y1
+        LavaCar.x = 200
+        LavaCar.y = 300
         
-        LavaDragon.x = X1
-        LavaDragon.y = Y2
+        LavaDragon.x = 200
+        LavaDragon.y = 600
         
-        SkyCar.x = X2
-        SkyCar.y = Y1
+        SkyCar.x = 500
+        SkyCar.y = 300
 
-        SkyDragon.x = X2
-        SkyDragon.y = Y2
+        SkyDragon.x = 500
+        SkyDragon.y = 600
 end
 
 -----------------------------------------------------------------------------------------
@@ -187,8 +186,14 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
     --covering the other scene with a rectangle so it looks faded and stops touch from going through
     bkg = display.newRect(display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight)
-    --setting to a semi black colour
-    bkg:setFillColor(0,1,0,1)
+    bkg:setFillColor(1,1,0.3,1)
+
+    ----------------------------------------------------------------------------------------
+    -- TEXT
+    -----------------------------------------------------------------------------------------
+    textObject = display.newText( "Character Select", 500, 100, nil, 100)
+    -- sets the color of the text
+    textObject:setTextColor(75/255, 55/255, 40/255)
 
     -----------------------------------------------------------------------------------------
     -- create the answer text object & wrong answer text objects
@@ -203,12 +208,32 @@ function scene:create( event )
 
     -----------------------------------------------------------------------------------------
 
+        backButton = widget.newButton( 
+        {   
+            -- Set its position on the screen relative to the screen size
+            x = 75,
+            y = 105,
+            width = 110,
+            height = 100,
+
+            -- Insert the images here
+            defaultFile = "Images/Back Button Unpressed.png",
+            overFile = "Images/Back Button Pressed.png",
+
+            -- When the button is released, call the Level1 screen transition function
+            onRelease = BackButtonTransition          
+        } )
+
+    -----------------------------------------------------------------------------------------
+
     -- insert all objects for this scene into the scene group
     sceneGroup:insert(bkg)
     sceneGroup:insert(LavaCar)
     sceneGroup:insert(LavaDragon)
     sceneGroup:insert(SkyCar)
     sceneGroup:insert(SkyDragon)
+    sceneGroup:insert(textObject)
+    sceneGroup:insert(backButton)
 
 
 end --function scene:create( event )

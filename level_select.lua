@@ -68,7 +68,7 @@ local function Level3ScreenTransition( )
 end    
 
 local function BackButtonTransition( )
-    composer.gotoScene( "main_menu", {effect = "slideDown", time = 1000})
+    composer.gotoScene( "CharacterSelect", {effect = "slideDown", time = 1000})
 end  
 
 -----------------------------------------------------------------------------------------
