@@ -40,7 +40,7 @@ local wooshChannel
 
 -- Background sound
 local backgroundSound = audio.loadSound( "Sounds/background.mp3" )
-local backgroundSoundChannel = audio.play(backgroundSound)
+local backgroundSoundChannel 
 
 
 -----------------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ end
 local function PlaySound()
     wooshChannel = audio.play(woosh)
 end
-timer.performWithDelay(1996, PlaySound)
+
 
 -- Function: MoveLogo
 -- Input: This function accepts an event listener
@@ -135,16 +135,15 @@ function scene:show( event )
     if ( phase == "will" ) then
        
     -----------------------------------------------------------------------------------------
-    
-    --backgroundSoundChannel = audio.play(backgroundSound {channel=3, loops=-1})
-    backgroundSoundChannel = audio.play(backgroundSound)
+     
 
     -- Called when the scene is now on screen.
     -- Insert code here to make the scene come alive.
     -- Example: start timers, begin animation, play audio, etc.
     elseif ( phase == "did" ) then      
-
+        backgroundSoundChannel = audio.play(backgroundSound)
         Runtime:addEventListener("enterFrame", MoveLogo) 
+        timer.performWithDelay(1996, PlaySound)
 
         timer.performWithDelay( 5000, gotoMainMenu )
     end
@@ -175,6 +174,7 @@ function scene:hide( event )
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
         -- stop the background sounds channel for this screen
+        audio.stop(backgroundSoundChannel)
     end
 
 end 

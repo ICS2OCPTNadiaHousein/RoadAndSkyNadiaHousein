@@ -14,7 +14,6 @@
 -- Background sound
 local backgroundSound = audio.loadSound( "Sounds/vehicle.mp3" )
 local backgroundSoundChannel
-local backgroundSoundChannel = audio.play(backgroundSound,{channel=1,loops=-1})
 
 local buttonSound = audio.loadSound( "Sounds/buttonPressed.mp3")
 local buttonSoundChannel
@@ -231,20 +230,17 @@ function scene:show( event )
     -- Called when the scene is still off screen (but is about to come on screen).   
     if ( phase == "will" ) then
 
-    function BackgroundMusic()
-        backgroundSoundChannel = audio.play(backgroundSound)
-        timer.peformWithDelay(BackgroundMusic, 8307)
-    end
-       
+    
+        
     -----------------------------------------------------------------------------------------
 
     -- Called when the scene is now on screen.
     -- Insert code here to make the scene come alive.
-    -- Example: start timers, begin animation, play audio, etc.
-    audio.play(baqckgroundSoundChannel)
+    -- Example: start timers, begin animation, play audio, etc.   
     elseif ( phase == "did" ) then       
         
-
+        backgroundSoundChannel = audio.play(backgroundSound,{channel=1,loops=-1})
+       
     end
 
 end -- function scene:show( event )
@@ -267,13 +263,13 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-        --audio.stop(backgroundSoundChannel)
 
 
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
+        audio.stop (backgroundSoundChannel)
     end
 
 end 
