@@ -55,7 +55,6 @@ local muteUnpressed
 local textObject
 local soundOn = true
 
-
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -82,9 +81,13 @@ end
 
 local function MuteButton( )
     if (soundOn == true) then
+        muteUnpressed.isVisible = false
+        mutePressed.isVisible = true
         audio.setVolume(0)
         soundOn = false
     elseif (soundOn == false) then
+        mutePressed.isVisible = false
+        muteUnpressed.isVisible = true
         audio.setVolume(1)
         soundOn = true
     end
@@ -114,12 +117,19 @@ function scene:create( event )
     bkg_image.height = display.contentHeight
 
     mutePressed = display.newImageRect("Images/mutePressed.png", 80, 80)
-    mutePressed.x = 260
+    mutePressed.x = 120
     mutePressed.y = 384
+    mutePressed.isVisible = false
+
+    muteUnpressed = display.newImageRect("Images/muteUnpressed.png", 80, 80)
+    muteUnpressed.x = 120
+    muteUnpressed.y = 384
+    muteUnpressed.isVisible = true
 
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg_image )
     sceneGroup:insert( mutePressed )
+    sceneGroup:insert( muteUnpressed )
 
     -----------------------------------------------------------------------------------------
     -- TEXT
@@ -201,8 +211,8 @@ function scene:create( event )
             height = 80,
 
             -- Insert the images here
-            defaultFile = "Images/muteUnpressed.png",
-            overFile = "Images/mutePressed.png",
+            defaultFile = "Images/muteButton.png",
+            overFile = "Images/muteButton.png",
 
             onRelease = MuteButton
 
