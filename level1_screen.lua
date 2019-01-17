@@ -12,7 +12,7 @@
 -- SOUNDS
 -----------------------------------------------------------------------------------------
 -- Background sound
-local backgroundSound = audio.loadSound( "Sounds/background2.mp3" )
+local backgroundSound = audio.loadSound( "Sounds/Level1.mp3" )
 local backgroundSoundChannel
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
